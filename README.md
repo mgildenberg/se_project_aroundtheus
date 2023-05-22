@@ -25,4 +25,10 @@ This project is made so all the elements are displayed correctly on popular scre
 
 - [Link to the project design on Figma](https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1)
 
+**Pages**
+
+- [View it HERE](https://mgildenberg.github.io/se_project_aroundtheus/)
+
 **Images**
+
+![1280px Resolution](images/1280px_resolution.png)

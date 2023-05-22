@@ -24,5 +24,7 @@ This project is made so all the elements are displayed correctly on popular scre
 - [View it HERE](https://mgildenberg.github.io/se_project_aroundtheus/)
 
 **Images**
-
+1280px Screenshot
 ![1280px Resolution](images/1280px_resolution.png)
+
+

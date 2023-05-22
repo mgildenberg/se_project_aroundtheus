@@ -2,5 +2,5 @@
   margin-top: 45px;
   padding-bottom: 41px;
   border-bottom: solid #545454 1px;
-  grid-template-columns: repeat(auto-fit, 282px);
+  /* grid-template-columns: repeat(auto-fit, 282px); nothing happens when I uncomment this so I don't need it */
 }

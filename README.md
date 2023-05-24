@@ -27,3 +27,6 @@ This project is made so all the elements are displayed correctly on popular scre
 
 1280px Screenshot
 ![1280px Resolution](images/1280px_resolution.png)
+
+320px Screenshot
+![320px Resolution](images/320px_resolution.png)

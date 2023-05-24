@@ -42,5 +42,6 @@
 }
 
 .card__like-button:hover {
-  opacity: 0.7;
+  opacity: 0.8;
+  cursor: pointer;
 }

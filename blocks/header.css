@@ -1,6 +1,13 @@
 .header {
   margin-top: 45px;
   padding-bottom: 41px;
-  border-bottom: solid #545454 1px;
+  border-bottom: solid rgba(84, 84, 84, 0.7) 1px;
   /* grid-template-columns: repeat(auto-fit, 282px); nothing happens when I uncomment this so I don't need it */
 }
+
+/* @media screen and (max-width: 768px) {
+  .header {
+    margin-left: 0;
+    margin-right: 0;
+  }
+} */

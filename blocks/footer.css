@@ -20,9 +20,9 @@
   }
 }
 
-@media screen and (max-width: 660px) {
+@media screen and (max-width: 620px) {
   .footer {
-    max-width: 299px; /* (282px card width + (2 * 17xp gap) */
+    max-width: 290px; /* (282px card width + (2 * 17xp gap) */
   }
 
   .footer__text {

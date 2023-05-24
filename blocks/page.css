@@ -13,13 +13,15 @@
 .page__content {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  margin: 0 20px;
-  max-width: calc(100% - 40px);
+  /* min-height: 100vh; */
+  /* margin: 0 20px; */
+  /* max-width: calc(100% - 40px); */
 }
 /* stops page__section from unnecessarily wideninng the elements it's mixed with as the screen gets thinner*/
 @media screen and (min-width: 768px) and (max-width: 1280px) {
   .page__section {
     max-width: min(calc(100% - 40px), 880px);
+    /* margin: 0 20px 0 20px; */
+    /* max-width: calc(100% - 40px);  */
   }
 }

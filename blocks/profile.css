@@ -1,8 +1,8 @@
 .profile {
   display: flex;
   align-items: center;
-  padding-top: 40px;
-  margin-bottom: 48px;
+  /* padding-top: 40px; */
+  margin: 36px auto 48px auto;
 }
 
 .profile__info {
@@ -52,6 +52,12 @@
   line-height: 22px;
   grid-area: description;
   margin: 0;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 373px;
+  /* max-width: ;  */
 }
 
 .profile__image {
@@ -69,6 +75,11 @@
   font-weight: 500;
   grid-area: title;
   margin: 0;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 373px;
 }
 
 /* @media screen and (max-width: ); */
@@ -77,6 +88,7 @@
   .profile {
     max-width: calc(100% - 20px);
     flex-direction: column;
+    margin-bottom: 36px;
   }
 
   .page__section {

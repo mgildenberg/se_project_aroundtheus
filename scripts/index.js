@@ -1,4 +1,4 @@
-let initialCards = [
+const initialCards = [
   {
     name: "Yosemite Valley",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
@@ -28,7 +28,7 @@ let initialCards = [
 // Elements
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
-const modalCloseButton = document.querySelector("#modal-close-button");
+const modalCloseButton = profileEditModal.querySelector("#modal-close-button");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileTitleInput = document.querySelector("#profile-title-input");
@@ -41,8 +41,12 @@ const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
 // Functions
-function closePopup() {
+function closeModal() {
   profileEditModal.classList.remove("modal_opened");
+}
+
+function openModal() {
+  profileEditModal.classList.add("modal_opened");
 }
 
 function getCardElement(cardData) {
@@ -53,42 +57,41 @@ function getCardElement(cardData) {
   const cardTitleEl = cardElement.querySelector(".card__title");
   // set the path to the image to the link field of the object
   cardImageEl.src = cardData.link;
-
   // set the image alt text to the name field of the object
-  cardImageEl.textContent = cardData.name;
-
+  cardImageEl.alt = `Photo of ${cardData.name}`;
   // set the card title to the name field of the object, too
   cardTitleEl.textContent = cardData.name;
-
   // return the ready HTML element with the filled-in data
   return cardElement;
 }
 
-// Event Handlers
+function fillProfileForm(e) {
+  profileTitleInput.value = profileTitle.textContent;
+  profileDescriptionInput.value = profileDescription.textContent;
+  openModal();
+}
 
 function handleProfileEditSubmit(e) {
   e.preventDefault();
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
-  closePopup();
+  closeModal();
 }
 
-// Event Listeners
-profileEditButton.addEventListener("click", () => {
-  profileTitleInput.value = profileTitle.textContent;
-  profileDescriptionInput.value = profileDescription.textContent;
-  profileEditModal.classList.add("modal_opened");
-});
+function openEditProfileModal() {
+  // fill profile form using fillProfileForm
+  profileEditButton.addEventListener("click", fillProfileForm);
+  // close the modal if no changes are desired
+  modalCloseButton.addEventListener("click", closeModal);
+  // save and close the modified profile info
+  profileEditForm.addEventListener("submit", handleProfileEditSubmit);
+}
 
-modalCloseButton.addEventListener("click", closePopup);
-
-profileEditForm.addEventListener("submit", handleProfileEditSubmit);
-
-// for (let i = 0; i < initialCards.length; i++) {
-//   console.log(initialCards[i]);
-// }
+// Loops
 
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
   cardListEl.prepend(cardElement);
 });
+
+openEditProfileModal();

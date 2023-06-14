@@ -13,16 +13,12 @@
     <title>Around The U.S.</title>
     <link rel="stylesheet" href="./pages/index.css" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> -->
   </head>
 
   <body class="page">
     <div class="page__content">
       <header class="header">
-        <!-- <div class="header__logo"> -->
         <img src="./images/logo.svg" alt="Around the U.S. logo" class="logo" />
-        <!-- </div> -->
       </header>
       <main class="content">
         <section class="profile page__section">
@@ -46,7 +42,6 @@
           <ul class="cards__list"></ul>
         </section>
       </main>
-      <!-- this has not snapped to the first grid column since i put it into the div -->
     </div>
     <footer class="footer">
       <p class="footer__text">© 2023 Around The U.S.</p>
@@ -54,7 +49,7 @@
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
         <button class="modal__close" id="modal-close-button"></button>
-        <p class="modal__heading">Edit profile</p>
+        <h3 class="modal__heading">Edit profile</h3>
         <form class="modal__form">
           <input
             class="modal__input"
@@ -62,6 +57,7 @@
             type="text"
             name="title"
             placeholder="Name"
+            required
           />
           <input
             class="modal__input"
@@ -70,8 +66,9 @@
             title="description"
             id="profile-description-input"
             placeholder="Description"
+            required
           />
-          <button class="modal__button">Save</button>
+          <button class="modal__button" type="submit">Save</button>
         </form>
       </div>
     </div>
@@ -83,6 +80,6 @@
           <button class="card__like-button" type="button"></button>
         </div></li
     ></template>
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/index.js" defer></script>
   </body>
 </html>

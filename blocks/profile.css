@@ -21,6 +21,7 @@
   border: solid #fff 1px;
   grid-area: button;
   align-self: center;
+  transition: opacity 0.5s ease-in-out;
   /* margin: 0; */
 }
 
@@ -38,6 +39,7 @@
   /* margin: auto; */
   margin-left: auto;
   cursor: pointer;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .profile__add-button:hover {

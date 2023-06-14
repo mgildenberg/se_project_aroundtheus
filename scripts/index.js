@@ -78,10 +78,14 @@ function handleProfileEditSubmit(e) {
 }
 
 function addProfileFormListeners() {
-  // open modal only upon clicking edit button
-  profileEditButton.addEventListener("click", openModal);
-  // form is prefilled with existing content instead of generic placeholders
-  profileEditButton.addEventListener("click", fillProfileForm);
+  /* 
+  - open modal only upon clicking edit button 
+  - form is prefilled with existing content instead of generic placeholders 
+  */
+  profileEditButton.addEventListener("click", () => {
+    fillProfileForm();
+    openModal();
+  });
   // close the modal if no changes are desired
   modalCloseButton.addEventListener("click", closeModal);
   // save and close the modified profile info

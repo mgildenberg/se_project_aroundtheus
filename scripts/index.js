@@ -68,7 +68,6 @@ function getCardElement(cardData) {
 function fillProfileForm(e) {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-  openModal();
 }
 
 function handleProfileEditSubmit(e) {
@@ -78,8 +77,10 @@ function handleProfileEditSubmit(e) {
   closeModal();
 }
 
-function openEditProfileModal() {
-  // fill profile form using fillProfileForm
+function addProfileFormListeners() {
+  // open modal only upon clicking edit button
+  profileEditButton.addEventListener("click", openModal);
+  // form is prefilled with existing content instead of generic placeholders
   profileEditButton.addEventListener("click", fillProfileForm);
   // close the modal if no changes are desired
   modalCloseButton.addEventListener("click", closeModal);
@@ -88,10 +89,10 @@ function openEditProfileModal() {
 }
 
 // Loops
-
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
   cardListEl.prepend(cardElement);
 });
 
-openEditProfileModal();
+// Call functions needed upon pageload
+addProfileFormListeners();

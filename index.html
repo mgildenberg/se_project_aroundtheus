@@ -46,6 +46,8 @@
     <footer class="footer">
       <p class="footer__text">© 2023 Around The U.S.</p>
     </footer>
+
+    <!-- Edit Modal -->
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
         <button
@@ -76,6 +78,38 @@
         </form>
       </div>
     </div>
+    <!-- Add card modal -->
+    <div class="modal" id="add-image-modal">
+      <div class="modal__container">
+        <button
+          class="modal__close"
+          id="modal-close-button"
+          type="button"
+        ></button>
+        <h3 class="modal__heading">New Place</h3>
+        <form class="modal__form" id="add-image-form">
+          <input
+            class="modal__input modal__input_type_title"
+            id="image-title-input"
+            type="text"
+            name="title"
+            placeholder="Title"
+            required
+          />
+          <input
+            class="modal__input modal__input_type_url"
+            type="text"
+            name="url"
+            title="url"
+            id="image-url-input"
+            placeholder="Image URL"
+            required
+          />
+          <button class="modal__button" type="submit">Save</button>
+        </form>
+      </div>
+    </div>
+
     <template id="card-template">
       <li class="card">
         <img class="card__image" src="" alt="" />

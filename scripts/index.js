@@ -39,6 +39,7 @@ const profileEditForm = profileEditModal.querySelector(".modal__form");
 const cardListEl = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
+const addImageModal = document.querySelector("#add-image-modal");
 
 // Functions
 function closeModal() {
@@ -78,12 +79,10 @@ function handleProfileEditSubmit(e) {
 }
 
 function addProfileFormListeners() {
-  /* 
-  - open modal only upon clicking edit button 
-  - form is prefilled with existing content instead of generic placeholders 
-  */
   profileEditButton.addEventListener("click", () => {
+    //form is prefilled with existing content instead of generic placeholders
     fillProfileForm();
+    // open modal only upon clicking edit button
     openModal();
   });
   // close the modal if no changes are desired

@@ -28,7 +28,9 @@ const initialCards = [
 // Elements
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
-const modalCloseButton = profileEditModal.querySelector("#modal-close-button");
+const profileEditModalCloseButton = profileEditModal.querySelector(
+  "#modal-close-button"
+);
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileTitleInput = document.querySelector("#profile-title-input");
@@ -39,15 +41,29 @@ const profileEditForm = profileEditModal.querySelector(".modal__form");
 const cardListEl = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
+const addNewCardButton = document.querySelector(".profile__add-button");
 const addImageModal = document.querySelector("#add-image-modal");
+const imageModalCloseButton = addImageModal.querySelector(
+  "#modal-close-button"
+);
 
 // Functions
-function closeModal() {
-  profileEditModal.classList.remove("modal_opened");
+
+function openModal(modal) {
+  modal.classList.add("modal_opened");
 }
 
-function openModal() {
-  profileEditModal.classList.add("modal_opened");
+function closeModal(modal) {
+  console.log("closing modal");
+  modal.classList.remove("modal_opened");
+}
+
+function openImageModal() {
+  addImageModal.classList.add("modal_opened");
+}
+
+function closeImageModal() {
+  addImageModal.classList.remove("modal_opened");
 }
 
 function getCardElement(cardData) {
@@ -56,12 +72,16 @@ function getCardElement(cardData) {
   // access the card title and image and store them in variables
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
+  const likeButton = cardElement.querySelector(".card__like-button");
   // set the path to the image to the link field of the object
   cardImageEl.src = cardData.link;
   // set the image alt text to the name field of the object
   cardImageEl.alt = `Photo of ${cardData.name}`;
   // set the card title to the name field of the object, too
   cardTitleEl.textContent = cardData.name;
+  likeButton.addEventListener("click", () => {
+    likeButton.classList.toggle("card__like-button_active");
+  });
   // return the ready HTML element with the filled-in data
   return cardElement;
 }
@@ -75,20 +95,33 @@ function handleProfileEditSubmit(e) {
   e.preventDefault();
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
-  closeModal();
+  closeModal(profileEditModal);
 }
 
 function addProfileFormListeners() {
   profileEditButton.addEventListener("click", () => {
+    // open modal only upon clicking edit button
+    openModal(profileEditModal);
     //form is prefilled with existing content instead of generic placeholders
     fillProfileForm();
-    // open modal only upon clicking edit button
-    openModal();
+    console.log("form opened and possibly edited");
   });
   // close the modal if no changes are desired
-  modalCloseButton.addEventListener("click", closeModal);
+  profileEditModalCloseButton.addEventListener("click", () => {
+    closeModal(profileEditModal);
+  });
   // save and close the modified profile info
   profileEditForm.addEventListener("submit", handleProfileEditSubmit);
+}
+
+function addNewCardListeners() {
+  addNewCardButton.addEventListener("click", () => {
+    openModal(addImageModal);
+  });
+  // close the modal if no changes are desired
+  imageModalCloseButton.addEventListener("click", () => {
+    closeModal(addImageModal);
+  });
 }
 
 // Loops
@@ -99,3 +132,11 @@ initialCards.forEach((cardData) => {
 
 // Call functions needed upon pageload
 addProfileFormListeners();
+addNewCardListeners();
+// const likeButtons = document.querySelectorAll(".card__like-button");
+
+// likeButtons.forEach((likeButton) => {
+//   likeButton.addEventListener("click", () => {
+//     likeButton.classList.toggle("card__like-button_active");
+//   });
+// });

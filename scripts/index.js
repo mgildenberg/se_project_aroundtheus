@@ -78,7 +78,17 @@ function closeModal(modal) {
   modal.classList.remove("modal_opened");
 }
 
+function replaceImageData(cardData, imageElement, titleElement) {
+  // set the image to the name field of the object, too
+  imageElement.src = cardData.link;
+  // set the image alt text to the name field of the object
+  imageElement.alt = `Photo of ${cardData.name}`;
+  // set the card title to the name field of the object, too
+  titleElement.textContent = cardData.name;
+}
+
 function getImageViewerModal(cardData) {
+  // clone the template element with all its content and store it in an imageViewerElement variable
   const imageViewerElement = imageViewerTemplate.cloneNode(true);
   const imageViewerImage = imageViewerElement.querySelector(
     ".image-viewer__image"
@@ -86,11 +96,7 @@ function getImageViewerModal(cardData) {
   const imageViewerTitle = imageViewerElement.querySelector(
     ".image-viewer__title"
   );
-  imageViewerImage.src = cardData.link;
-  // set the image alt text to the name field of the object
-  imageViewerImage.alt = `Photo of ${cardData.name}`;
-  // set the card title to the name field of the object, too
-  imageViewerTitle.textContent = cardData.name;
+  replaceImageData(cardData, imageViewerImage, imageViewerTitle);
   imageViewerModalContainer.append(imageViewerElement);
   return imageViewerElement;
 }
@@ -103,12 +109,7 @@ function getCardElement(cardData) {
   const cardTitleEl = cardElement.querySelector(".card__title");
   const likeButton = cardElement.querySelector(".card__like-button");
   const cardTrashButton = cardElement.querySelector(".card__trash-button");
-  // set the path to the image to the link field of the object
-  cardImageEl.src = cardData.link;
-  // set the image alt text to the name field of the object
-  cardImageEl.alt = `Photo of ${cardData.name}`;
-  // set the card title to the name field of the object, too
-  cardTitleEl.textContent = cardData.name;
+  replaceImageData(cardData, cardImageEl, cardTitleEl);
   // like button active and inactive
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("card__like-button_active");

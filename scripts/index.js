@@ -79,10 +79,7 @@ function closeModal(modal) {
 }
 
 function getImageViewerModal(cardData) {
-  console.log("we are in the openimageviewermodal function");
-  console.log(cardData);
   const imageViewerElement = imageViewerTemplate.cloneNode(true);
-  console.log("imageViewerElement before assignments", imageViewerElement);
   const imageViewerImage = imageViewerElement.querySelector(
     ".image-viewer__image"
   );
@@ -90,11 +87,9 @@ function getImageViewerModal(cardData) {
     ".image-viewer__title"
   );
   imageViewerImage.src = cardData.link;
-  console.log(imageViewerImage);
-  console.log("imageViewerElement after assignments", imageViewerElement);
-  // // set the image alt text to the name field of the object
+  // set the image alt text to the name field of the object
   imageViewerImage.alt = `Photo of ${cardData.name}`;
-  // // set the card title to the name field of the object, too
+  // set the card title to the name field of the object, too
   imageViewerTitle.textContent = cardData.name;
   imageViewerModalContainer.append(imageViewerElement);
   return imageViewerElement;
@@ -126,7 +121,6 @@ function getCardElement(cardData) {
 
   // setup card info if user clicks to view image
   cardImageEl.addEventListener("click", () => {
-    console.log("clicked image");
     getImageViewerModal(cardData);
     openModal(imageViewerModal);
   });

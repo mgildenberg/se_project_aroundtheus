@@ -31,6 +31,7 @@
 .modal__container_image {
   border-radius: 0;
   padding: 0;
+  background-color: transparent;
 }
 
 .modal__close {

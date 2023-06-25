@@ -1,6 +1,5 @@
 .image-viewer {
   list-style-type: none;
-  background-color: transparent;
 }
 
 .image-viewer__image {
@@ -8,9 +7,11 @@
 }
 
 .image-viewer__title {
-  /* font-family: inherit; */
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-weight: 400;
   font-size: 12px;
-  background-color: transparent;
-  /* color: #ffff; */
+  line-height: 1.2;
+  color: #ffff;
+  margin-top: 10px;
   margin-bottom: 0;
 }

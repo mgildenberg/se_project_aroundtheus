@@ -28,6 +28,11 @@
   max-width: 430px;
 }
 
+.modal__container_image {
+  border-radius: 0;
+  padding: 0;
+}
+
 .modal__close {
   background-image: url("../images/close-icon.svg");
   background-repeat: no-repeat;
@@ -104,6 +109,11 @@
   .modal__container {
     max-width: 282px;
     padding: 22px;
+  }
+
+  .modal__container_image {
+    border-radius: 0;
+    padding: 0;
   }
 
   .modal__close {

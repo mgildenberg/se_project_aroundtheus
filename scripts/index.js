@@ -25,13 +25,13 @@ const initialCards = [
   },
 ];
 
-// ------------------ Elements ------------------------------------------- //
+// -------------------------- Elements ---------------------------  //
 
 // Profile Edit Modal
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileEditModalCloseButton = profileEditModal.querySelector(
-  "#modal-close-button"
+  "#profile-edit-modal-close-button"
 );
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
@@ -48,7 +48,7 @@ const cardTemplate =
 const addNewCardButton = document.querySelector(".profile__add-button");
 const addImageModal = document.querySelector("#add-image-modal");
 const imageModalCloseButton = addImageModal.querySelector(
-  "#modal-close-button"
+  "#add-image-modal-close-button"
 );
 const addNewCardForm = addImageModal.querySelector("#add-image-form");
 const cardTitleInput = addNewCardForm.querySelector(".modal__input_type_title");
@@ -62,19 +62,16 @@ const imageViewerModalContainer = imageViewerModal.querySelector(
   ".modal__container_image"
 );
 const imageViewerModalCloseButton = imageViewerModal.querySelector(
-  "#modal-close-button"
+  "#image-viewer-modal-close-button"
 );
 
-// card__trash - button;
-
-// ------------------ Functions ------------------------------------------- //
+// --------------------------- Functions --------------------------- //
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
 }
 
 function closeModal(modal) {
-  console.log("closing modal");
   modal.classList.remove("modal_opened");
 }
 

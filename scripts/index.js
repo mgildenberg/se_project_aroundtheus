@@ -121,6 +121,7 @@ function getCardElement(cardData) {
   cardImageEl.addEventListener("click", () => {
     getImageViewerModal(cardData);
     openModal(imageViewerModal);
+    imageViewerModalCloseButton.classList.remove("modal__close_utilized");
   });
   // return the ready HTML element with the filled-in data
   return cardElement;
@@ -142,8 +143,6 @@ function addCardFormSubmit(e) {
   e.preventDefault();
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
-  // const cardElement = getCardElement({ name, link });
-  // cardListEl.prepend(cardElement);
   renderCard({ name, link }, cardListEl);
   closeModal(addImageModal);
 }
@@ -181,17 +180,22 @@ function renderCard(cardData, wrapper) {
   wrapper.prepend(cardElement);
 }
 
+function addImageViewerListeners() {
+  imageViewerModalCloseButton.addEventListener("click", () => {
+    const imageViewerModalContents =
+      imageViewerModalContainer.querySelector(".image-viewer");
+    // clears list to prevent next click from appending more images to modal
+    imageViewerModalContents.remove();
+    // hides close button to prevent close button visually shifting down when contents are removed
+    imageViewerModalCloseButton.classList.toggle("modal__close_utilized");
+    closeModal(imageViewerModal);
+  });
+}
+
 // Loops
 initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
 
 // Call functions needed upon pageload
 addProfileFormListeners();
 addNewCardListeners();
-
-imageViewerModalCloseButton.addEventListener("click", () => {
-  closeModal(imageViewerModal);
-  // clears list to prevent next click from appending more images to modal
-  const imageViewerModalContents =
-    imageViewerModalContainer.querySelector(".image-viewer");
-  imageViewerModalContents.remove();
-});
+addImageViewerListeners();

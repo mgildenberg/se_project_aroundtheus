@@ -10,18 +10,14 @@
   align-items: center;
   color: #000;
   padding: 0 36px;
-  display: none;
-  /* opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease; */
+  opacity: 0; /* set initial opacity to 0 */
+  visibility: hidden; /* set initial visibility to hidden */
+  transition: opacity 1s ease-in, visibility 0.5s ease-in; /* add transition for opacity and visibility */
 }
 
-/* .modal:focus {
-  opacity: 1;
-  visibility: visible;
-} */
-
 .modal_opened {
+  opacity: 1; /* set final opacity to 1 */
+  visibility: visible; /* set final visibility to visible */
   display: flex;
 }
 
@@ -40,8 +36,6 @@
   border-radius: 0;
   padding: 0;
   background-color: transparent;
-  /* max-width: 75vw; // this makes the image large?
-  max-height: 75vh; // this makes the image large? */
 }
 
 .modal__close {
@@ -55,11 +49,16 @@
   position: absolute;
   left: calc(100% + 5px);
   bottom: calc(100% + 5px);
+  /* display: none; */
 }
 
 .modal__close:hover {
   cursor: pointer;
   opacity: 0.6;
+}
+
+.modal__close_utilized {
+  display: none;
 }
 
 .modal__heading {
@@ -131,8 +130,6 @@
     width: 26px;
     height: 26px;
     position: absolute;
-    /* right: calc((100% + 5px) * -1);
-    top: calc((100% + 5px) * -1); */
     left: calc(100% - 26px);
     bottom: calc(100% + 20px);
   }

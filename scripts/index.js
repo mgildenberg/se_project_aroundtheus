@@ -145,6 +145,7 @@ function addCardFormSubmit(e) {
   const link = cardUrlInput.value;
   renderCard({ name, link }, cardListEl);
   closeModal(addImageModal);
+  addNewCardForm.reset();
 }
 
 function addProfileFormListeners() {

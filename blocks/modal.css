@@ -12,15 +12,15 @@
   padding: 0 36px;
   opacity: 0; /* set initial opacity to 0 */
   visibility: hidden; /* set initial visibility to hidden */
-  pointer-events: none; /*// can't interact with closed popup*/
-  transition: visibility 0s 0.5s, opacity 0.5s linear; /* add transition for opacity and visibility */
+  pointer-events: none; /* can't interact with closed popup*/
+  transition: opacity 0.5s linear; /* add transition for opacity without visibility */
 }
 
 .modal_opened {
   opacity: 1; /* set final opacity to 1 */
   visibility: visible; /* set final visibility to visible */
   pointer-events: all; /* can interact with opened popup */
-  transition: visibility 0s, opacity 0.5s linear;
+  transition: opacity 0.5s linear; /* add transition for opacity */
 }
 
 .modal__container {

@@ -47,57 +47,71 @@
       <p class="footer__text">© 2023 Around The U.S.</p>
     </footer>
 
-    <!-- Edit Modal -->
-    <div class="modal" id="profile-edit-modal">
-      <div class="modal__container">
+    <!-- Edit popup -->
+    <div class="popup" id="profile-edit-popup">
+      <div class="popup__container">
         <button
-          class="modal__close"
-          id="profile-edit-modal-close-button"
+          class="popup__close"
+          id="profile-edit-popup-close-button"
           type="button"
         ></button>
-        <h3 class="modal__heading">Edit profile</h3>
-        <form class="modal__form">
+        <h3 class="popup__heading">Edit profile</h3>
+        <form class="popup__form">
           <input
-            class="modal__input"
+            class="popup__input"
             id="profile-title-input"
             type="text"
             name="title"
             placeholder="Name"
+            minlength="2"
+            maxlength="20"
             required
           />
+          <span class="popup__error" id="profile-title-input-error"></span>
           <input
-            class="modal__input"
+            class="popup__input"
             type="text"
             name="about-me"
             title="description"
             id="profile-description-input"
             placeholder="Description"
             required
+            minlength="2"
+            maxlength="400"
           />
-          <button class="modal__button" type="submit">Save</button>
+          <span
+            class="popup__error"
+            id="profile-description-input-error"
+          ></span>
+          <button class="popup__button" id="profile-button" type="submit">
+            Save
+          </button>
         </form>
       </div>
     </div>
-    <!-- Add card modal -->
-    <div class="modal" id="add-image-modal">
-      <div class="modal__container">
+    <!-- Add card popup -->
+    <div class="popup" id="add-image-popup">
+      <div class="popup__container">
         <button
-          class="modal__close"
-          id="add-image-modal-close-button"
+          class="popup__close"
+          id="add-image-popup-close-button"
           type="button"
         ></button>
-        <h3 class="modal__heading">New Place</h3>
-        <form class="modal__form" id="add-image-form">
+        <h3 class="popup__heading">New Place</h3>
+        <form class="popup__form" id="add-image-form">
           <input
-            class="modal__input modal__input_type_title"
+            class="popup__input popup__input_type_title"
             id="image-title-input"
             type="text"
             name="title"
             placeholder="Title"
+            minlength="1"
+            maxlength="30"
             required
           />
+          <span class="popup__error" id="image-title-input-error"></span>
           <input
-            class="modal__input modal__input_type_url"
+            class="popup__input popup__input_type_url"
             type="url"
             name="url"
             title="url"
@@ -105,16 +119,23 @@
             placeholder="Image URL"
             required
           />
-          <button class="modal__button" type="submit">Save</button>
+          <span class="popup__error" id="image-url-input-error"></span>
+          <button
+            class="popup__button popup__button_disabled"
+            type="submit"
+            disabled
+          >
+            Save
+          </button>
         </form>
       </div>
     </div>
-    <!-- Image Viewer Modal -->
-    <div class="modal" id="modal-image-viewer">
-      <div class="modal__container modal__container_image">
+    <!-- Image Viewer popup -->
+    <div class="popup" id="popup-image-viewer">
+      <div class="popup__container popup__container_image">
         <button
-          class="modal__close"
-          id="image-viewer-modal-close-button"
+          class="popup__close"
+          id="image-viewer-popup-close-button"
           type="button"
         ></button>
         <div class="image-viewer">
@@ -135,5 +156,6 @@
         </div></li
     ></template>
     <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/validate.js" defer></script>
   </body>
 </html>

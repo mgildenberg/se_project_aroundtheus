@@ -67,32 +67,33 @@ const imageViewerListEl =
 
 // --------------------------- Functions --------------------------- //
 
-function addEscListeners() {
-  document.addEventListener("keydown", (evt) => {
-    if (evt.key == "Escape") {
-      let popupOpenedEls = [...document.querySelectorAll(".popup_opened")];
-      popupOpenedEls.forEach((popupOpenedEl) => {
-        closePopup(popupOpenedEl);
-      });
-      // let popupOpenedEl = document.querySelector(".popup_opened");
-      // closePopup(popupOpenedEl);
-    }
-  });
+function handleEscKey(evt) {
+  if (evt.key == "Escape") {
+    let popupOpenedEls = [...document.querySelectorAll(".popup_opened")];
+    popupOpenedEls.forEach((popupOpenedEl) => {
+      closePopup(popupOpenedEl);
+    });
+  }
+}
 
-  // document.removeEventListener("keydown");
+function handleClickAway(evt) {
+  if (
+    evt.target.classList.contains("popup") ||
+    evt.target.classList.contains("popup__close")
+  ) {
+    closePopup(evt.currentTarget);
+  }
+}
+
+function addEscListeners() {
+  // scan entire DOM for Esc key given Esc can be pressed anytime/anywhere
+  document.addEventListener("keydown", handleEscKey);
 }
 
 function addClickAwayListeners() {
   const popupEls = [...document.querySelectorAll(".popup")];
   popupEls.forEach((popupEl) => {
-    popupEl.addEventListener("mousedown", (evt) => {
-      if (
-        evt.target.classList.contains("popup") ||
-        evt.target.classList.contains("popup__close")
-      ) {
-        closePopup(evt.currentTarget);
-      }
-    });
+    popupEl.addEventListener("mousedown", handleClickAway);
   });
 }
 
@@ -100,7 +101,7 @@ function openPopup(popup) {
   popup.classList.add("popup_opened");
   // Checklist says Esc listener must be prompted by popup open
   addEscListeners();
-  // Click Away makes sense to add for popup open too
+  // Click Away makes sense to add upon popup open too
   addClickAwayListeners();
 }
 

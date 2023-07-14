@@ -15,8 +15,9 @@ function hideInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
 function checkInputValidity(formEl, inputEl, options) {
   if (!inputEl.validity.valid) {
     return showInputError(formEl, inputEl, options);
-  } //else
-  hideInputError(formEl, inputEl, options);
+  } else {
+    hideInputError(formEl, inputEl, options);
+  }
 }
 
 function hasInvalidInput(inputList) {
@@ -38,8 +39,9 @@ function enableButton(buttonEl, inactiveButtonClass) {
 function toggleButtonState(inputEls, submitButton, { inactiveButtonClass }) {
   if (hasInvalidInput(inputEls)) {
     return disableButton(submitButton, inactiveButtonClass);
-  } // else
-  enableButton(submitButton, inactiveButtonClass);
+  } else {
+    enableButton(submitButton, inactiveButtonClass);
+  }
 }
 
 function setEventListeners(formEl, options) {
@@ -47,10 +49,10 @@ function setEventListeners(formEl, options) {
   const { submitButtonSelector } = options;
   // look for all inputs inside of form
   const inputEls = [...formEl.querySelectorAll(inputSelector)];
-  const submitButton = formEl.querySelector(submitButtonSelector); // changed this from All to just Selector
+  const submitButton = formEl.querySelector(submitButtonSelector);
   // loop through all the inputs to see if all are valid
   inputEls.forEach((inputEl) => {
-    inputEl.addEventListener("keydown", (evt) => {
+    inputEl.addEventListener("input", (evt) => {
       // if input is not valid
       // get the validation message
       // add the error class to the input
@@ -67,7 +69,10 @@ function enableValidation(options) {
   // Loop through form elements
   // Add Event Listener
   formEls.forEach((formEl) => {
-    formEl.addEventListener("submit", (evt) => evt.preventDefault());
+    formEl.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+      formEl.reset();
+    });
     setEventListeners(formEl, options);
   });
 }

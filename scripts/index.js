@@ -50,6 +50,9 @@ const addImagePopup = document.querySelector("#add-image-popup");
 const imagePopupCloseButton = addImagePopup.querySelector(
   "#add-image-popup-close-button"
 );
+const addImagePopupSubmitButton = addImagePopup.querySelector(
+  "#add-image-popup-submit-button"
+);
 const addNewCardForm = addImagePopup.querySelector("#add-image-form");
 const cardTitleInput = addNewCardForm.querySelector(".popup__input_type_title");
 const cardUrlInput = addNewCardForm.querySelector(".popup__input_type_url");
@@ -69,10 +72,8 @@ const imageViewerListEl =
 
 function handleEscKey(evt) {
   if (evt.key == "Escape") {
-    let popupOpenedEls = [...document.querySelectorAll(".popup_opened")];
-    popupOpenedEls.forEach((popupOpenedEl) => {
-      closePopup(popupOpenedEl);
-    });
+    const popupOpenedEl = document.querySelector(".popup_opened");
+    closePopup(popupOpenedEl);
   }
 }
 
@@ -85,28 +86,19 @@ function handleClickAway(evt) {
   }
 }
 
-function addEscListeners() {
-  // scan entire DOM for Esc key given Esc can be pressed anytime/anywhere
-  document.addEventListener("keydown", handleEscKey);
-}
-
-function addClickAwayListeners() {
-  const popupEls = [...document.querySelectorAll(".popup")];
-  popupEls.forEach((popupEl) => {
-    popupEl.addEventListener("mousedown", handleClickAway);
-  });
-}
-
 function openPopup(popup) {
   popup.classList.add("popup_opened");
   // Checklist says Esc listener must be prompted by popup open
-  addEscListeners();
+  document.addEventListener("keydown", handleEscKey);
   // Click Away makes sense to add upon popup open too
-  addClickAwayListeners();
+  popup.addEventListener("mousedown", handleClickAway);
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
+  // Remove listeners
+  popup.removeEventListener("mousedown", handleClickAway);
+  document.removeEventListener("keydown", handleEscKey);
 }
 
 function replaceImageData(cardData, imageElement, titleElement) {
@@ -176,12 +168,19 @@ function addCardFormSubmit(e) {
   renderCard({ name, link }, cardListEl);
   closePopup(addImagePopup);
   addNewCardForm.reset();
+  // toggleButtonState(
+  //   { name, link },
+  //   addNewCardButton,
+  //   config["inactiveButtonClass"]
+  // );
+  // toggleButtonState(e.currentTarget, e.target, config["inactiveButtonClass"]);
 }
 
 function addProfileFormListeners() {
   profileEditButton.addEventListener("click", () => {
     // open popup only upon clicking edit button
     openPopup(profileEditPopup);
+
     //form is prefilled with existing content instead of generic placeholders
     fillProfileForm();
   });

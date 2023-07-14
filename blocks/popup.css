@@ -102,6 +102,18 @@
   font-size: 18px;
   line-height: 22px;
   text-align: center;
+  cursor: default;
+}
+
+/* .popup__button:hover {
+  cursor: pointer;
+  /* background-color: rgba(0, 0, 0, 0.8); */
+/*opacity: 0.6;
+} */
+
+.popup__button:hover:not(:disabled) {
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 .popup__button_disabled {
@@ -110,10 +122,8 @@
   color: rgba(0, 0, 0, 0.2);
 }
 
-.popup__button:hover {
-  cursor: pointer;
-  /* background-color: rgba(0, 0, 0, 0.8); */
-  opacity: 0.6;
+.popup__button_disabled:hover {
+  cursor: default;
 }
 
 .popup__input_type_error {

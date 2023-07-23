@@ -1,3 +1,5 @@
+import Card from "../components/Card.js";
+
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -24,6 +26,11 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
   },
 ];
+
+// const cardData = {
+//   name: "Yosemite Valley",
+//   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+// };
 
 // -------------------------- Elements ---------------------------  //
 
@@ -86,7 +93,7 @@ function handleClickAway(evt) {
   }
 }
 
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add("popup_opened");
   // Checklist says Esc listener must be prompted by popup open
   document.addEventListener("keydown", handleEscKey);
@@ -110,7 +117,7 @@ function replaceImageData(cardData, imageElement, titleElement) {
   titleElement.textContent = cardData.name;
 }
 
-function getImageViewerPopup(cardData) {
+export function getImageViewerPopup(cardData) {
   // const imageViewerElement = imageViewerTemplate.cloneNode(true);
   const imageViewerImage = imageViewerListEl.querySelector(
     ".image-viewer__image"
@@ -121,33 +128,37 @@ function getImageViewerPopup(cardData) {
   replaceImageData(cardData, imageViewerImage, imageViewerTitle);
 }
 
-function getCardElement(cardData) {
-  // clone the template element with all its content and store it in a cardElement variable
-  const cardElement = cardTemplate.cloneNode(true);
-  // access the card title and image and store them in variables
-  const cardImageEl = cardElement.querySelector(".card__image");
-  const cardTitleEl = cardElement.querySelector(".card__title");
-  const likeButton = cardElement.querySelector(".card__like-button");
-  const cardTrashButton = cardElement.querySelector(".card__trash-button");
-  replaceImageData(cardData, cardImageEl, cardTitleEl);
-  // like button active and inactive
-  likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__like-button_active");
-  });
-  // trash photo event and function
-  cardTrashButton.addEventListener("click", () => {
-    const deleteCardElementParent = cardTrashButton.closest(".card");
-    deleteCardElementParent.remove();
-  });
+// function getCardElement(cardData) {
+//   const card = new Card(cardData, "#card-template"); // cardTemplate exists too
+//   const cardElement = card.getView();
+// console.log(cardElement);
+// clone the template element with all its content and store it in a cardElement variable
+//const cardElement = cardTemplate.cloneNode(true);
+// access the card title and image and store them in variables
+//const cardImageEl = cardElement.querySelector(".card__image");
+//const cardTitleEl = cardElement.querySelector(".card__title");
+// console.log(cardElement);
+//const likeButton = cardElement.querySelector(".card__like-button");
+//const cardTrashButton = cardElement.querySelector(".card__trash-button");
+//replaceImageData(cardData, cardImageEl, cardTitleEl);
+// like button active and inactive
+// likeButton.addEventListener("click", () => {
+//   likeButton.classList.toggle("card__like-button_active");
+// });
+// trash photo event and function
+// cardTrashButton.addEventListener("click", () => {
+//   const deleteCardElementParent = cardTrashButton.closest(".card");
+//   deleteCardElementParent.remove();
+// });
 
-  // setup card info if user clicks to view image
-  cardImageEl.addEventListener("click", () => {
-    getImageViewerPopup(cardData);
-    openPopup(imageViewerPopup);
-  });
+// setup card info if user clicks to view image
+// cardImageEl.addEventListener("click", () => {
+//   getImageViewerPopup(cardData);
+//   openPopup(imageViewerPopup);
+// });
 
-  return cardElement;
-}
+//   return cardElement;
+// }
 
 function fillProfileForm(e) {
   profileTitleInput.value = profileTitle.textContent;
@@ -205,8 +216,11 @@ function addNewCardListeners() {
 }
 
 function renderCard(cardData, wrapper) {
-  const cardElement = getCardElement(cardData);
-  wrapper.prepend(cardElement);
+  //const cardElement = getCardElement(cardData);
+  const card = new Card(cardData, "#card-template"); // cardTemplate exists too
+  wrapper.prepend(card.getView());
+  // console.log(card.getView());
+  //wrapper.prepend(cardElement);
 }
 
 function addImageViewerListeners() {

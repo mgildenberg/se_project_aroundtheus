@@ -1,4 +1,5 @@
 import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
 
 const initialCards = [
   {
@@ -26,11 +27,6 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
   },
 ];
-
-// const cardData = {
-//   name: "Yosemite Valley",
-//   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-// };
 
 // -------------------------- Elements ---------------------------  //
 
@@ -115,6 +111,7 @@ function replaceImageData(cardData, imageElement, titleElement) {
   imageElement.alt = `Photo of ${cardData.name}`;
   // set the card title to the name field of the object, too
   titleElement.textContent = cardData.name;
+  console.log("imageElement.alt log", imageElement.alt);
 }
 
 export function getImageViewerPopup(cardData) {
@@ -127,6 +124,27 @@ export function getImageViewerPopup(cardData) {
   );
   replaceImageData(cardData, imageViewerImage, imageViewerTitle);
 }
+
+const config = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible",
+};
+
+// enabling validation by calling enableValidation()
+// pass all the settings on call
+
+const editFormElement = profileEditForm;
+const addFormElement = addNewCardForm;
+
+const editFormValidator = new FormValidator(config, editFormElement);
+const addFormValidator = new FormValidator(config, addFormElement);
+
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
 
 // function getCardElement(cardData) {
 //   const card = new Card(cardData, "#card-template"); // cardTemplate exists too
@@ -174,9 +192,16 @@ function handleProfileEditSubmit(e) {
 
 function addCardFormSubmit(e) {
   e.preventDefault();
+  console.log(e.target.value);
+  console.log("cardTitleInput", cardTitleInput);
   const name = cardTitleInput.value;
+  console.log(name);
   const link = cardUrlInput.value;
-  renderCard({ name, link }, cardListEl);
+  const newCardDataObj = { name: name, link: link };
+  // console.log("newCardDataobj", newCardDataObj);
+  // console.log(cardTitleInput);
+  //console.log("addCardFormSubmit", newName, newLink);
+  renderCard(newCardDataObj, cardListEl);
   closePopup(addImagePopup);
   addNewCardForm.reset();
   // toggleButtonState(
@@ -212,7 +237,9 @@ function addNewCardListeners() {
     closePopup(addImagePopup);
   });
   // save form info and close to show a new card
-  addNewCardForm.addEventListener("submit", addCardFormSubmit);
+  addNewCardForm.addEventListener("submit", (e) => {
+    addCardFormSubmit(e);
+  });
 }
 
 function renderCard(cardData, wrapper) {

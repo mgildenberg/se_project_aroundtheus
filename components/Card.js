@@ -19,9 +19,6 @@ export default class Card {
     const likeButton = this._cardElement.querySelector(".card__like-button");
 
     likeButton.addEventListener("click", () => {
-      // console.log("like button clicked");
-      // console.log(this);
-      // this._handleLikeButton();
       this._cardElement
         .querySelector(".card__like-button")
         .classList.toggle("card__like-button_active");
@@ -30,7 +27,7 @@ export default class Card {
     const cardImageEl = this._cardElement.querySelector(".card__image");
     cardImageEl.addEventListener("click", () => {
       console.log("image clicked");
-      console.log(this._cardElement);
+      // console.log(this._cardElement);
       this._handleImageEl();
     });
 
@@ -57,12 +54,14 @@ export default class Card {
   _handleImageEl() {
     // setup card info if user clicks to view image
     const cardData = { name: this._name, link: this._link };
+    // console.log(cardData);
     const imageViewerPopup = document.querySelector("#popup-image-viewer");
     getImageViewerPopup(cardData);
     openPopup(imageViewerPopup);
   }
 
   _replaceImageData() {
+    // console.log(this._cardElement);
     const cardImageEl = this._cardElement.querySelector(".card__image");
     cardImageEl.src = this._link;
     cardImageEl.alt = `Photo of ${this._name}`;

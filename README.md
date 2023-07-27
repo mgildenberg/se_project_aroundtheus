@@ -9,6 +9,8 @@ This project is made so all the elements are displayed correctly on popular scre
 - HTML
 - CSS
 - Responsive design with Grid and Flexbox
+- OOP with classes
+- Event Listeners + Handlers
 
 **Plans for Improvement**
 

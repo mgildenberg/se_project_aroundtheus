@@ -1,5 +1,10 @@
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
+import {
+  handleProfileEditSubmit,
+  openPopup,
+  closePopup,
+} from "../utils/utils.js";
 
 const initialCards = [
   {
@@ -46,16 +51,16 @@ const profileEditForm = profileEditPopup.querySelector(".popup__form");
 
 // Add New Card Popup
 const cardListEl = document.querySelector(".cards__list");
-const cardTemplate =
-  document.querySelector("#card-template").content.firstElementChild;
+// const cardTemplate =
+//   document.querySelector("#card-template").content.firstElementChild;
 const addNewCardButton = document.querySelector(".profile__add-button");
 const addImagePopup = document.querySelector("#add-image-popup");
 const imagePopupCloseButton = addImagePopup.querySelector(
   "#add-image-popup-close-button"
 );
-const addImagePopupSubmitButton = addImagePopup.querySelector(
-  "#add-image-popup-submit-button"
-);
+// const addImagePopupSubmitButton = addImagePopup.querySelector(
+//   "#add-image-popup-submit-button"
+// );
 const addNewCardForm = addImagePopup.querySelector("#add-image-form");
 const cardTitleInput = addNewCardForm.querySelector(".popup__input_type_title");
 const cardUrlInput = addNewCardForm.querySelector(".popup__input_type_url");
@@ -73,37 +78,6 @@ const imageViewerListEl =
 
 // --------------------------- Functions --------------------------- //
 
-function handleEscKey(evt) {
-  if (evt.key == "Escape") {
-    const popupOpenedEl = document.querySelector(".popup_opened");
-    closePopup(popupOpenedEl);
-  }
-}
-
-function handleClickAway(evt) {
-  if (
-    evt.target.classList.contains("popup") ||
-    evt.target.classList.contains("popup__close")
-  ) {
-    closePopup(evt.currentTarget);
-  }
-}
-
-export function openPopup(popup) {
-  popup.classList.add("popup_opened");
-  // Checklist says Esc listener must be prompted by popup open
-  document.addEventListener("keydown", handleEscKey);
-  // Click Away makes sense to add upon popup open too
-  popup.addEventListener("mousedown", handleClickAway);
-}
-
-function closePopup(popup) {
-  popup.classList.remove("popup_opened");
-  // Remove listeners
-  popup.removeEventListener("mousedown", handleClickAway);
-  document.removeEventListener("keydown", handleEscKey);
-}
-
 function replaceImageData(cardData, imageElement, titleElement) {
   // set the image to the name field of the object, too
   imageElement.src = cardData.link;
@@ -111,7 +85,6 @@ function replaceImageData(cardData, imageElement, titleElement) {
   imageElement.alt = `Photo of ${cardData.name}`;
   // set the card title to the name field of the object, too
   titleElement.textContent = cardData.name;
-  console.log("imageElement.alt log", imageElement.alt);
 }
 
 export function getImageViewerPopup(cardData) {
@@ -134,82 +107,21 @@ const config = {
   errorClass: "popup__error_visible",
 };
 
-// enabling validation by calling enableValidation()
-// pass all the settings on call
-
-const editFormElement = profileEditForm;
-const addFormElement = addNewCardForm;
-
-const editFormValidator = new FormValidator(config, editFormElement);
-const addFormValidator = new FormValidator(config, addFormElement);
-
-editFormValidator.enableValidation();
-addFormValidator.enableValidation();
-
-// function getCardElement(cardData) {
-//   const card = new Card(cardData, "#card-template"); // cardTemplate exists too
-//   const cardElement = card.getView();
-// console.log(cardElement);
-// clone the template element with all its content and store it in a cardElement variable
-//const cardElement = cardTemplate.cloneNode(true);
-// access the card title and image and store them in variables
-//const cardImageEl = cardElement.querySelector(".card__image");
-//const cardTitleEl = cardElement.querySelector(".card__title");
-// console.log(cardElement);
-//const likeButton = cardElement.querySelector(".card__like-button");
-//const cardTrashButton = cardElement.querySelector(".card__trash-button");
-//replaceImageData(cardData, cardImageEl, cardTitleEl);
-// like button active and inactive
-// likeButton.addEventListener("click", () => {
-//   likeButton.classList.toggle("card__like-button_active");
-// });
-// trash photo event and function
-// cardTrashButton.addEventListener("click", () => {
-//   const deleteCardElementParent = cardTrashButton.closest(".card");
-//   deleteCardElementParent.remove();
-// });
-
-// setup card info if user clicks to view image
-// cardImageEl.addEventListener("click", () => {
-//   getImageViewerPopup(cardData);
-//   openPopup(imageViewerPopup);
-// });
-
-//   return cardElement;
-// }
-
 function fillProfileForm(e) {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
 }
 
-function handleProfileEditSubmit(e) {
-  e.preventDefault();
-  profileTitle.textContent = profileTitleInput.value;
-  profileDescription.textContent = profileDescriptionInput.value;
-  closePopup(profileEditPopup);
-}
-
 function addCardFormSubmit(e) {
   e.preventDefault();
-  console.log(e.target.value);
-  console.log("cardTitleInput", cardTitleInput);
   const name = cardTitleInput.value;
-  console.log(name);
   const link = cardUrlInput.value;
   const newCardDataObj = { name: name, link: link };
-  // console.log("newCardDataobj", newCardDataObj);
-  // console.log(cardTitleInput);
-  //console.log("addCardFormSubmit", newName, newLink);
   renderCard(newCardDataObj, cardListEl);
   closePopup(addImagePopup);
-  addNewCardForm.reset();
-  // toggleButtonState(
-  //   { name, link },
-  //   addNewCardButton,
-  //   config["inactiveButtonClass"]
-  // );
-  // toggleButtonState(e.currentTarget, e.target, config["inactiveButtonClass"]);
+  // disables button after the card form is submitted for the 1st time based on design
+  //
+  addFormValidator.disableSubmitButton();
 }
 
 function addProfileFormListeners() {
@@ -243,11 +155,8 @@ function addNewCardListeners() {
 }
 
 function renderCard(cardData, wrapper) {
-  //const cardElement = getCardElement(cardData);
   const card = new Card(cardData, "#card-template"); // cardTemplate exists too
   wrapper.prepend(card.getView());
-  // console.log(card.getView());
-  //wrapper.prepend(cardElement);
 }
 
 function addImageViewerListeners() {
@@ -263,3 +172,17 @@ initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
 addProfileFormListeners();
 addNewCardListeners();
 addImageViewerListeners();
+
+// enabling validation by calling enableValidation()
+// pass all the settings on call
+
+const editFormElement = profileEditForm;
+const addFormElement = addNewCardForm;
+
+const editFormValidator = new FormValidator(config, editFormElement);
+const addFormValidator = new FormValidator(config, addFormElement);
+
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
+
+export default editFormValidator;

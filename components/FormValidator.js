@@ -1,3 +1,12 @@
+// const settings = {
+//   formSelector: ".popup__form",
+//   inputSelector: ".popup__input",
+//   submitButtonSelector: ".popup__button",
+//   inactiveButtonClass: "popup__button_disabled",
+//   inputErrorClass: "popup__input_type_error",
+//   errorClass: "popup__error_visible",
+// };
+
 class FormValidator {
   constructor(settings, formElement) {
     this._settings = settings;
@@ -11,25 +20,25 @@ class FormValidator {
     this._errorClass = settings.errorClass;
   }
 
-  _hasInvalidInput(inputList) {
-    return !inputList.every((inputEl) => inputEl.validity.valid);
+  _hasInvalidInput() {
+    return !this._inputEls.every((inputEl) => inputEl.validity.valid);
   }
 
-  _disableButton(buttonEl, inactiveButtonClass) {
-    buttonEl.classList.add(inactiveButtonClass);
-    buttonEl.disabled = true;
+  _disableButton() {
+    this._submitButton.classList.add(this._inactiveButtonClass);
+    this._submitButton.disabled = true;
   }
 
-  _enableButton(buttonEl, inactiveButtonClass) {
-    buttonEl.classList.remove(inactiveButtonClass);
-    buttonEl.disabled = false;
+  _enableButton() {
+    this._submitButton.classList.remove(this._inactiveButtonClass);
+    this._submitButton.disabled = false;
   }
 
-  _toggleButtonState(inputEls, submitButton) {
-    if (this._hasInvalidInput(inputEls)) {
-      return this._disableButton(submitButton, this._inactiveButtonClass);
+  _toggleButtonState() {
+    if (this._hasInvalidInput()) {
+      return this._disableButton();
     } else {
-      this._enableButton(submitButton, this._inactiveButtonClass);
+      this._enableButton();
     }
   }
 
@@ -52,7 +61,6 @@ class FormValidator {
   }
 
   _checkInputValidity(inputElement) {
-    //console.log(!inputElement.validity.valid);
     if (!inputElement.validity.valid) {
       return this._showInputError(inputElement);
     } else {
@@ -62,53 +70,40 @@ class FormValidator {
 
   _setEventListeners() {
     // look for all inputs inside of form
-    const inputEls = [...this._form.querySelectorAll(this._inputSelector)];
-    const submitButton = this._form.querySelector(this._submitButtonSelector);
+    this._inputEls = [...this._form.querySelectorAll(this._inputSelector)];
+    this._submitButton = this._form.querySelector(this._submitButtonSelector);
     // loop through all the inputs to see if all are valid
-    inputEls.forEach((inputElement) => {
+    this._inputEls.forEach((inputElement) => {
       inputElement.addEventListener("input", (evt) => {
         // if input is not valid
         // get the validation message
         // add the error class to the input
         // display error message
-        // _checkInputValidity(formEl, inputEl, options);
-        this._checkInputValidity(inputElement); //, options);
+        this._checkInputValidity(inputElement);
         // disable button
-        this._toggleButtonState(inputEls, submitButton); // refactor this
+        this._toggleButtonState();
       });
     });
   }
 
   enableValidation() {
-    // function enableValidation(options) {
     const formEl = this._form;
-    console.log("we are running enableValidation", formEl);
     // Loop through form elements
     // Add Event Listener
     formEl.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      formEl.reset();
     });
-    this._setEventListeners(formEl); //, options);
+    this._setEventListeners(formEl);
   }
-  //   }
 
-  disableSubmitButton() {} //checklist requires this
+  disableSubmitButton() {
+    // if the button is not already disabled, disable it
+    if (!this._submitButton.classList.contains(this._inactiveButtonClass)) {
+      this._disableButton();
+    }
+    // Reset all the form's inputs
+    this._form.reset();
+  }
 }
-
-const settings = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
-};
-
-// // this will go to index js later
-// const editFormValidator = new FormValidator(settings, editForm);
-// editFormValidator.enableValidation();
-// const addCardFormValidator = new FormValidator(settings, addCardForm);
-// addCardFormValidator.enableValidation();
 
 export default FormValidator;

@@ -5,7 +5,8 @@
 // It has private methods for each event handler.
 // It has one public method that returns a fully functional card element populated with data.
 // Create a Card class instance for each card
-import { openPopup, getImageViewerPopup } from "../pages/index.js";
+import { getImageViewerPopup } from "../pages/index.js";
+import { openPopup } from "../utils/utils.js";
 
 export default class Card {
   constructor({ name, link }, cardSelector) {
@@ -26,8 +27,6 @@ export default class Card {
 
     const cardImageEl = this._cardElement.querySelector(".card__image");
     cardImageEl.addEventListener("click", () => {
-      console.log("image clicked");
-      // console.log(this._cardElement);
       this._handleImageEl();
     });
 

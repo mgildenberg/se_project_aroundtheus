@@ -5,6 +5,7 @@
 // It has private methods for each event handler.
 // It has one public method that returns a fully functional card element populated with data.
 // Create a Card class instance for each card
+
 import { getImageViewerPopup } from "../pages/index.js";
 import { openPopup } from "../utils/utils.js";
 
@@ -16,25 +17,16 @@ export default class Card {
   }
 
   _setEventListeners() {
-    // ".card__like-button"
-    const likeButton = this._cardElement.querySelector(".card__like-button");
-
-    likeButton.addEventListener("click", () => {
-      this._cardElement
-        .querySelector(".card__like-button")
-        .classList.toggle("card__like-button_active");
+    // ".card__like-button
+    this._likeButton.addEventListener("click", () => {
+      this._handleLikeButton();
     });
 
-    const cardImageEl = this._cardElement.querySelector(".card__image");
-    cardImageEl.addEventListener("click", () => {
+    this._cardImageEl.addEventListener("click", () => {
       this._handleImageEl();
     });
 
-    // ".card__trash-button"
-    const cardTrashButton = this._cardElement.querySelector(
-      ".card__trash-button"
-    );
-    cardTrashButton.addEventListener("click", () => {
+    this._cardTrashButton.addEventListener("click", () => {
       this._handleTrashButton();
     });
   }
@@ -60,13 +52,9 @@ export default class Card {
   }
 
   _replaceImageData() {
-    // console.log(this._cardElement);
-    const cardImageEl = this._cardElement.querySelector(".card__image");
-    cardImageEl.src = this._link;
-    cardImageEl.alt = `Photo of ${this._name}`;
-    const cardTitleEl = this._cardElement.querySelector(".card__title");
-    cardTitleEl.textContent = this._name;
-    // console.log(cardTitleEl);
+    this._cardImageEl.src = this._link;
+    this._cardImageEl.alt = `Photo of ${this._name}`;
+    this._cardTitleEl.textContent = this._name;
   }
 
   getView() {
@@ -75,10 +63,16 @@ export default class Card {
       .querySelector(this._cardSelector)
       .cloneNode(true).content.firstElementChild;
 
+    this._likeButton = this._cardElement.querySelector(".card__like-button");
+    this._cardImageEl = this._cardElement.querySelector(".card__image");
+    this._cardTrashButton = this._cardElement.querySelector(
+      ".card__trash-button"
+    );
+    this._cardTitleEl = this._cardElement.querySelector(".card__title");
+
     this._replaceImageData();
     // set event listeners
     this._setEventListeners();
-    // console.log(this);
     // return the card
     return this._cardElement;
   }

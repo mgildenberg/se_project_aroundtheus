@@ -1,37 +1,7 @@
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-import {
-  handleProfileEditSubmit,
-  openPopup,
-  closePopup,
-} from "../utils/utils.js";
-
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-  },
-  {
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-  },
-];
+import { openPopup, closePopup } from "../utils/utils.js";
+import { initialCards, config } from "../utils/constants.js";
 
 // -------------------------- Elements ---------------------------  //
 
@@ -87,6 +57,15 @@ function replaceImageData(cardData, imageElement, titleElement) {
   titleElement.textContent = cardData.name;
 }
 
+function handleProfileEditSubmit(e) {
+  e.preventDefault();
+  profileTitle.textContent = profileTitleInput.value;
+  profileDescription.textContent = profileDescriptionInput.value;
+  closePopup(profileEditPopup);
+  /* Disable Submit Button will only run after the form receives its 1st successful input */
+  editFormValidator.disableButton();
+}
+
 export function getImageViewerPopup(cardData) {
   // const imageViewerElement = imageViewerTemplate.cloneNode(true);
   const imageViewerImage = imageViewerListEl.querySelector(
@@ -97,15 +76,6 @@ export function getImageViewerPopup(cardData) {
   );
   replaceImageData(cardData, imageViewerImage, imageViewerTitle);
 }
-
-const config = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
-};
 
 function fillProfileForm(e) {
   profileTitleInput.value = profileTitle.textContent;
@@ -121,7 +91,7 @@ function addCardFormSubmit(e) {
   closePopup(addImagePopup);
   // disables button after the card form is submitted for the 1st time based on design
   //
-  addFormValidator.disableSubmitButton();
+  addFormValidator.disableButton();
 }
 
 function addProfileFormListeners() {
@@ -176,11 +146,8 @@ addImageViewerListeners();
 // enabling validation by calling enableValidation()
 // pass all the settings on call
 
-const editFormElement = profileEditForm;
-const addFormElement = addNewCardForm;
-
-const editFormValidator = new FormValidator(config, editFormElement);
-const addFormValidator = new FormValidator(config, addFormElement);
+const editFormValidator = new FormValidator(config, profileEditForm);
+const addFormValidator = new FormValidator(config, addNewCardForm);
 
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();

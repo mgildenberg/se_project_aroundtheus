@@ -32,9 +32,7 @@ export default class Card {
   }
 
   _handleLikeButton() {
-    this._cardElement
-      .querySelector(".card__button")
-      .classList.toggle("card__like-button_active");
+    this._likeButton.classList.toggle("card__like-button_active");
   }
 
   _handleTrashButton() {

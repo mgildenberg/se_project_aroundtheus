@@ -28,8 +28,6 @@ const addImagePopup = document.querySelector("#add-image-popup");
 const imagePopupCloseButton = addImagePopup.querySelector(
   "#add-image-popup-close-button"
 );
-// const addImagePopupSubmitButton = addImagePopup.querySelector(
-//   "#add-image-popup-submit-button"
 // );
 const addNewCardForm = addImagePopup.querySelector("#add-image-form");
 const cardTitleInput = addNewCardForm.querySelector(".popup__input_type_title");
@@ -89,6 +87,7 @@ function addCardFormSubmit(e) {
   const newCardDataObj = { name: name, link: link };
   renderCard(newCardDataObj, cardListEl);
   closePopup(addImagePopup);
+  addNewCardForm.reset();
   // disables button after the card form is submitted for the 1st time based on design
   //
   addFormValidator.disableButton();
@@ -125,7 +124,7 @@ function addNewCardListeners() {
 }
 
 function renderCard(cardData, wrapper) {
-  const card = new Card(cardData, "#card-template"); // cardTemplate exists too
+  const card = new Card(cardData, "#card-template");
   wrapper.prepend(card.getView());
 }
 

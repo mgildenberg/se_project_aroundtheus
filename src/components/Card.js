@@ -5,7 +5,6 @@
 // It has private methods for each event handler.
 // It has one public method that returns a fully functional card element populated with data.
 // Create a Card class instance for each card
-
 import { getImageViewerPopup } from "../pages/index.js";
 import { openPopup } from "../utils/utils.js";
 

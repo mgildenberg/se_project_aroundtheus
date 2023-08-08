@@ -1,154 +1,93 @@
-import Card from "../components/Card.js";
-import FormValidator from "../components/FormValidator.js";
-import { openPopup, closePopup } from "../utils/utils.js";
+import "./index.css";
+import Popup from "../components/Popup.js";
 import { initialCards, config } from "../utils/constants.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import FormValidator from "../components/FormValidator.js";
 
-// -------------------------- Elements ---------------------------  //
-
-// Profile Edit Popup
 const profileEditButton = document.querySelector("#profile-edit-button");
-const profileEditPopup = document.querySelector("#profile-edit-popup");
-const profileEditPopupCloseButton = profileEditPopup.querySelector(
-  "#profile-edit-popup-close-button"
-);
-const profileTitle = document.querySelector(".profile__title");
-const profileDescription = document.querySelector(".profile__description");
-const profileTitleInput = document.querySelector("#profile-title-input");
-const profileDescriptionInput = document.querySelector(
-  "#profile-description-input"
-);
-const profileEditForm = profileEditPopup.querySelector(".popup__form");
-
-// Add New Card Popup
-const cardListEl = document.querySelector(".cards__list");
-// const cardTemplate =
-//   document.querySelector("#card-template").content.firstElementChild;
 const addNewCardButton = document.querySelector(".profile__add-button");
-const addImagePopup = document.querySelector("#add-image-popup");
-const imagePopupCloseButton = addImagePopup.querySelector(
-  "#add-image-popup-close-button"
-);
-// );
-const addNewCardForm = addImagePopup.querySelector("#add-image-form");
-const cardTitleInput = addNewCardForm.querySelector(".popup__input_type_title");
-const cardUrlInput = addNewCardForm.querySelector(".popup__input_type_url");
 
-// Image Viewer Popup
-const imageViewerPopup = document.querySelector("#popup-image-viewer");
-const imageViewerPopupContainer = imageViewerPopup.querySelector(
-  ".popup__container_image"
+const addNewCardForm = new PopupWithForm(
+  "#add-image-popup",
+  //   addCardFormSubmit(e)
+  console.log("addNewCardForm handleFormSubmit function was used")
 );
-const imageViewerPopupCloseButton = imageViewerPopup.querySelector(
-  "#image-viewer-popup-close-button"
+
+const addNewCardFormEl = document.querySelector("#add-image-form");
+const profileEditFormEl = document
+  .querySelector("#profile-edit-popup")
+  .querySelector(".popup__form");
+
+const addFormValidator = new FormValidator(config, addNewCardFormEl);
+
+addFormValidator.enableValidation();
+
+const profileEditForm = new PopupWithForm(
+  "#profile-edit-popup",
+  //   handleProfileEditSubmit(e)
+  (e) => {
+    e.preventDefault();
+    console.log("profileEditForm handleFormSubmit function was used");
+  }
 );
-const imageViewerListEl =
-  imageViewerPopupContainer.querySelector(".image-viewer");
 
-// --------------------------- Functions --------------------------- //
-
-function replaceImageData(cardData, imageElement, titleElement) {
-  // set the image to the name field of the object, too
-  imageElement.src = cardData.link;
-  // set the image alt text to the name field of the object
-  imageElement.alt = `Photo of ${cardData.name}`;
-  // set the card title to the name field of the object, too
-  titleElement.textContent = cardData.name;
-}
+const editFormValidator = new FormValidator(config, profileEditFormEl);
+editFormValidator.enableValidation();
 
 function handleProfileEditSubmit(e) {
   e.preventDefault();
-  profileTitle.textContent = profileTitleInput.value;
-  profileDescription.textContent = profileDescriptionInput.value;
-  closePopup(profileEditPopup);
+  //   profileTitle.textContent = profileTitleInput.value;
+  //   profileDescription.textContent = profileDescriptionInput.value;
+  //   closePopup(profileEditPopup);
   /* Disable Submit Button will only run after the form receives its 1st successful input */
   editFormValidator.disableButton();
 }
 
-export function getImageViewerPopup(cardData) {
-  // const imageViewerElement = imageViewerTemplate.cloneNode(true);
-  const imageViewerImage = imageViewerListEl.querySelector(
-    ".image-viewer__image"
-  );
-  const imageViewerTitle = imageViewerListEl.querySelector(
-    ".image-viewer__title"
-  );
-  replaceImageData(cardData, imageViewerImage, imageViewerTitle);
-}
+function addNewCardListeners() {
+  addNewCardButton.addEventListener("click", () => {
+    addNewCardForm.open();
+  });
 
-function fillProfileForm(e) {
-  profileTitleInput.value = profileTitle.textContent;
-  profileDescriptionInput.value = profileDescription.textContent;
-}
-
-function addCardFormSubmit(e) {
-  e.preventDefault();
-  const name = cardTitleInput.value;
-  const link = cardUrlInput.value;
-  const newCardDataObj = { name: name, link: link };
-  renderCard(newCardDataObj, cardListEl);
-  closePopup(addImagePopup);
-  addNewCardForm.reset();
-  // disables button after the card form is submitted for the 1st time based on design
-  //
-  addFormValidator.disableButton();
+  addNewCardForm.setEventListeners();
+  // close the popup if no changes are desired
+  // might already be in the class, check for sprint 8
+  //   const addImagePopupCloseButton = addImagePopup.querySelector(
+  //     "#add-image-popup-close-button"
+  //   );
+  // check if this works from the class for sprint 8
+  //   addImagePopupCloseButton.addEventListener("click", () => {
+  //     addNewCardForm.close();
+  //   });
+  // fix this for sprint 8
+  // save form info and close to show a new card
+  //   addNewCardForm.addEventListener("submit", () => {
+  //     // addCardFormSubmit(e);
+  //     addNewCardForm._submitForm();
+  //     addNewCardForm.close();
+  //   });
 }
 
 function addProfileFormListeners() {
   profileEditButton.addEventListener("click", () => {
     // open popup only upon clicking edit button
-    openPopup(profileEditPopup);
+    profileEditForm.open();
 
     //form is prefilled with existing content instead of generic placeholders
-    fillProfileForm();
+    //fillProfileForm();
+    profileEditForm._getInputValues();
+    profileEditForm.setEventListeners();
   });
-  // close the popup if no changes are desired
-  profileEditPopupCloseButton.addEventListener("click", () => {
-    closePopup(profileEditPopup);
-  });
+  // close the popup if no changes are desired // this is already covered in the class so might delete
+  //   profileEditPopupCloseButton.addEventListener("click", () => {
+  //     profileEditForm.close();
+  //   });
   // save and close the modified profile info
-  profileEditForm.addEventListener("submit", handleProfileEditSubmit);
+
+  // fix this, put it back for sprint 8
+  //profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 }
 
-function addNewCardListeners() {
-  addNewCardButton.addEventListener("click", () => {
-    openPopup(addImagePopup);
-  });
-  // close the popup if no changes are desired
-  imagePopupCloseButton.addEventListener("click", () => {
-    closePopup(addImagePopup);
-  });
-  // save form info and close to show a new card
-  addNewCardForm.addEventListener("submit", (e) => {
-    addCardFormSubmit(e);
-  });
-}
-
-function renderCard(cardData, wrapper) {
-  const card = new Card(cardData, "#card-template");
-  wrapper.prepend(card.getView());
-}
-
-function addImageViewerListeners() {
-  imageViewerPopupCloseButton.addEventListener("click", () => {
-    closePopup(imageViewerPopup);
-  });
-}
-
-// Loops
-initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
-
-// Call functions needed upon pageload
 addProfileFormListeners();
 addNewCardListeners();
-addImageViewerListeners();
-
-// enabling validation by calling enableValidation()
-// pass all the settings on call
-
-const editFormValidator = new FormValidator(config, profileEditForm);
-const addFormValidator = new FormValidator(config, addNewCardForm);
-
-editFormValidator.enableValidation();
-addFormValidator.enableValidation();
 
 export default editFormValidator;

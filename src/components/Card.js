@@ -5,7 +5,7 @@
 // It has private methods for each event handler.
 // It has one public method that returns a fully functional card element populated with data.
 // Create a Card class instance for each card
-import { getImageViewerPopup } from "../pages/index.js";
+//import { getImageViewerPopup } from "../pages/index.js";
 import { openPopup } from "../utils/utils.js";
 
 export default class Card {
@@ -39,14 +39,15 @@ export default class Card {
     this._cardElement = null;
   }
 
-  _handleImageEl() {
-    // setup card info if user clicks to view image
-    const cardData = { name: this._name, link: this._link };
-    // console.log(cardData);
-    const imageViewerPopup = document.querySelector("#popup-image-viewer");
-    getImageViewerPopup(cardData);
-    openPopup(imageViewerPopup);
-  }
+  ///// fix this before submitting sprint 8 ///
+  // _handleImageEl() {
+  //   // setup card info if user clicks to view image
+  //   const cardData = { name: this._name, link: this._link };
+  //   // console.log(cardData);
+  //   const imageViewerPopup = document.querySelector("#popup-image-viewer");
+  //   getImageViewerPopup(cardData);
+  //   openPopup(imageViewerPopup);
+  // }
 
   _replaceImageData() {
     this._cardImageEl.src = this._link;

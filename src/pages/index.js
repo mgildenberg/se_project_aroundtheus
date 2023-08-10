@@ -3,9 +3,28 @@ import Popup from "../components/Popup.js";
 import { initialCards, config } from "../utils/constants.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import FormValidator from "../components/FormValidator.js";
+import UserInfo from "../components/UserInfo.js";
 
 const profileEditButton = document.querySelector("#profile-edit-button");
 const addNewCardButton = document.querySelector(".profile__add-button");
+
+const profileTitleInput = document.querySelector("#profile-title-input");
+const profileDescriptionInput = document.querySelector(
+  "#profile-description-input"
+);
+
+const profileTitle = document.querySelector(".profile__title");
+const profileDescription = document.querySelector(".profile__description");
+
+const pageUserInfo = new UserInfo({
+  nameSelector: ".profile__title",
+  jobSelector: ".profile__description",
+});
+
+// pageUserInfo.getUserInfo();
+// console.log(pageUserInfo.getUserInfo()); // added for sprint 8, to set current inputs to this info
+
+// const currentUserInfo = pageUserInfo.getUserInfo();
 
 const addNewCardForm = new PopupWithForm(
   "#add-image-popup",
@@ -22,14 +41,12 @@ const addFormValidator = new FormValidator(config, addNewCardFormEl);
 
 addFormValidator.enableValidation();
 
-const profileEditForm = new PopupWithForm(
-  "#profile-edit-popup",
-  //   handleProfileEditSubmit(e)
-  (e) => {
-    e.preventDefault();
-    console.log("profileEditForm handleFormSubmit function was used");
-  }
-);
+const profileEditForm = new PopupWithForm("#profile-edit-popup", () => {
+  pageUserInfo.setUserInfo();
+  editFormValidator.disableButton();
+  profileEditForm.close();
+  console.log("profileEditForm handleFormSubmit function was used");
+});
 
 const editFormValidator = new FormValidator(config, profileEditFormEl);
 editFormValidator.enableValidation();
@@ -67,14 +84,17 @@ function addNewCardListeners() {
   //   });
 }
 
+function fillProfileForm(e) {
+  profileTitleInput.value = profileTitle.textContent;
+  profileDescriptionInput.value = profileDescription.textContent;
+  profileEditForm();
+}
+
 function addProfileFormListeners() {
-  profileEditButton.addEventListener("click", () => {
+  profileEditButton.addEventListener("click", (e) => {
     // open popup only upon clicking edit button
     profileEditForm.open();
-
-    //form is prefilled with existing content instead of generic placeholders
-    //fillProfileForm();
-    profileEditForm._getInputValues();
+    fillProfileForm(e);
     profileEditForm.setEventListeners();
   });
   // close the popup if no changes are desired // this is already covered in the class so might delete

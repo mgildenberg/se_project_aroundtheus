@@ -11,16 +11,9 @@ export default class UserInfo {
     return { name: this._name, job: this._job };
   }
 
-  setUserInfo() {
-    // console.log("this is setUserInfo", name, job);
-    this._profileTitleInput = document.querySelector("#profile-title-input");
-    this._profileDescriptionInput = document.querySelector(
-      "#profile-description-input"
-    );
-    this._profileTitle.textContent = this._profileTitleInput.value;
-    this._profileDescription.textContent = this._profileDescriptionInput.value;
-    // this._profileTitle.textContent = name;
-    // console.log(this._profileTitle);
-    // this._profileDescription.textContent = job;
+  setUserInfo(inputValues) {
+    console.log(inputValues);
+    this._profileTitle.textContent = inputValues.title;
+    this._profileDescription.textContent = inputValues.about;
   }
 }

@@ -4,6 +4,7 @@ import { initialCards, config } from "../utils/constants.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import FormValidator from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
+import Card from "../components/Card.js";
 
 const profileEditButton = document.querySelector("#profile-edit-button");
 const addNewCardButton = document.querySelector(".profile__add-button");
@@ -21,15 +22,21 @@ const pageUserInfo = new UserInfo({
   jobSelector: ".profile__description",
 });
 
-// pageUserInfo.getUserInfo();
-// console.log(pageUserInfo.getUserInfo()); // added for sprint 8, to set current inputs to this info
-
-// const currentUserInfo = pageUserInfo.getUserInfo();
-
 const addNewCardForm = new PopupWithForm(
   "#add-image-popup",
   //   addCardFormSubmit(e)
-  console.log("addNewCardForm handleFormSubmit function was used")
+  (inputValues) => {
+    const cardEl = new Card(inputValues, "#card-template");
+    const cardListEl = document.querySelector(".cards__list");
+    cardListEl.prepend(cardEl.getView());
+    console.log(cardEl);
+
+    // function renderCard(cardData, wrapper) {
+    //   const card = new Card(cardData, "#card-template");
+    //   wrapper.prepend(card.getView());
+    // }
+    //console.log("addNewCardForm handleFormSubmit function was used")
+  }
 );
 
 const addNewCardFormEl = document.querySelector("#add-image-form");
@@ -41,24 +48,28 @@ const addFormValidator = new FormValidator(config, addNewCardFormEl);
 
 addFormValidator.enableValidation();
 
-const profileEditForm = new PopupWithForm("#profile-edit-popup", () => {
-  pageUserInfo.setUserInfo();
-  editFormValidator.disableButton();
-  profileEditForm.close();
-  console.log("profileEditForm handleFormSubmit function was used");
-});
+const profileEditForm = new PopupWithForm(
+  "#profile-edit-popup",
+  (inputValues) => {
+    console.log(inputValues);
+    pageUserInfo.setUserInfo(inputValues);
+    editFormValidator.disableButton();
+    profileEditForm.close();
+  }
+);
 
 const editFormValidator = new FormValidator(config, profileEditFormEl);
 editFormValidator.enableValidation();
 
-function handleProfileEditSubmit(e) {
-  e.preventDefault();
-  //   profileTitle.textContent = profileTitleInput.value;
-  //   profileDescription.textContent = profileDescriptionInput.value;
-  //   closePopup(profileEditPopup);
-  /* Disable Submit Button will only run after the form receives its 1st successful input */
-  editFormValidator.disableButton();
-}
+// 8/10 this might be duplicative of the other stuff so ill keep it commented out
+// function handleProfileEditSubmit(e) {
+//   e.preventDefault();
+//   //   profileTitle.textContent = profileTitleInput.value;
+//   //   profileDescription.textContent = profileDescriptionInput.value;
+//   //   closePopup(profileEditPopup);
+//   /* Disable Submit Button will only run after the form receives its 1st successful input */
+//   editFormValidator.disableButton();
+// }
 
 function addNewCardListeners() {
   addNewCardButton.addEventListener("click", () => {
@@ -66,6 +77,9 @@ function addNewCardListeners() {
   });
 
   addNewCardForm.setEventListeners();
+
+  // 8/10 update tbh all these listeners are covered by the class
+
   // close the popup if no changes are desired
   // might already be in the class, check for sprint 8
   //   const addImagePopupCloseButton = addImagePopup.querySelector(
@@ -87,7 +101,7 @@ function addNewCardListeners() {
 function fillProfileForm(e) {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-  profileEditForm();
+  //   profileEditForm();
 }
 
 function addProfileFormListeners() {

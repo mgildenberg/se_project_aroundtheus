@@ -10,24 +10,28 @@ class Section {
     this._cardElementsContainer = document.querySelector(cardElementsSelector);
   }
 
-  //   renderItems() {
-  //     this._render;
-  //   }
-
   renderItems() {
+    //console.log(this._cardElementsContainer);
     // use this to create the elements for rendering
     this._items.forEach((item) => {
       this._renderer(item);
     });
+
+    console.log("in renderItems");
   }
 
   addItem(element) {
-    this._cardElementsContainer.append(element);
+    // console.log(element);
+    // console.log(this._cardElementsContainer);
+    const cardListEl = document.querySelector(".cards__list");
+    cardListEl.append(element);
+    //this._cardElementsContainer.append(element);
+    // newCardElementsContainer.append(element);
   }
 
-  prependItem(domElement) {
-    this._containerElement.prepend(element);
+  prependItem(element) {
+    this._cardElementsContainer.prepend(element);
   }
 }
 
-// const cardSection = new Section();
+export default Section;

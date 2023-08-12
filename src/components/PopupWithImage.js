@@ -10,7 +10,7 @@ export default class PopupWithImage extends Popup {
     this._name = name;
     this._link = link;
     this._imageViewerListEl = this._popupElement.querySelector(".image-viewer");
-    this._imageViewerImage = this.popupElement.querySelector(
+    this._imageViewerImage = this._popupElement.querySelector(
       ".image-viewer__image"
     );
     this._imageViewerTitle = this._imageViewerListEl.querySelector(

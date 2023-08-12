@@ -6,13 +6,18 @@
 // It has one public method that returns a fully functional card element populated with data.
 // Create a Card class instance for each card
 //import { getImageViewerPopup } from "../pages/index.js";
-import { openPopup } from "../utils/utils.js";
+// import { openPopup } from "../utils/utils.js";
+// import PopupWithImage from "./PopupWIthImage.js";
+
+// to do: define handleCardClick in index.js
+// delete the private method below but use its logic as described above
 
 export default class Card {
   constructor({ name, link }, cardSelector) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
+    // this._handleCardClick = handleCardClick;
   }
 
   _setEventListeners() {
@@ -22,7 +27,8 @@ export default class Card {
     });
 
     this._cardImageEl.addEventListener("click", () => {
-      this._handleImageEl();
+      console.log("image clicked");
+      //this._handleImageEl();
     });
 
     this._cardTrashButton.addEventListener("click", () => {
@@ -43,10 +49,16 @@ export default class Card {
   // _handleImageEl() {
   //   // setup card info if user clicks to view image
   //   const cardData = { name: this._name, link: this._link };
+  //   console.log(cardData);
   //   // console.log(cardData);
-  //   const imageViewerPopup = document.querySelector("#popup-image-viewer");
-  //   getImageViewerPopup(cardData);
-  //   openPopup(imageViewerPopup);
+  //   // const imageViewerPopup = document.querySelector("#popup-image-viewer");
+  //   const imageViewerPopup = new PopupWithImage(
+  //     "#popup-image-viewer",
+  //     cardData
+  //   );
+  //   console.log(imageViewerPopup);
+  //   imageViewerPopup.open();
+  //   imageViewerPopup.setEventListeners();
   // }
 
   _replaceImageData() {
@@ -72,6 +84,8 @@ export default class Card {
     // set event listeners
     this._setEventListeners();
     // return the card
+
+    // console.log(this._cardElement);
     return this._cardElement;
   }
 }

@@ -34,4 +34,34 @@ const config = {
   errorClass: "popup__error_visible",
 };
 
-export { initialCards, config };
+const profileEditButton = document.querySelector("#profile-edit-button");
+const addNewCardButton = document.querySelector(".profile__add-button");
+
+const profileTitleInput = document.querySelector("#profile-title-input");
+const profileDescriptionInput = document.querySelector(
+  "#profile-description-input"
+);
+
+const profileTitle = document.querySelector(".profile__title");
+const profileDescription = document.querySelector(".profile__description");
+
+const addNewCardFormEl = document.querySelector("#add-image-form");
+const profileEditFormEl = document
+  .querySelector("#profile-edit-popup")
+  .querySelector(".popup__form");
+
+const cardListEl = document.querySelector(".cards__list");
+
+export {
+  initialCards,
+  config,
+  profileEditButton,
+  addNewCardButton,
+  profileTitleInput,
+  profileTitle,
+  profileDescription,
+  profileDescriptionInput,
+  addNewCardFormEl,
+  profileEditFormEl,
+  cardListEl,
+};

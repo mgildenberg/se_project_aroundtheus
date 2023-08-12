@@ -1,57 +1,42 @@
 import "./index.css";
-import Popup from "../components/Popup.js";
-import { initialCards, config } from "../utils/constants.js";
+// import Popup from "../components/Popup.js";
+import {
+  initialCards,
+  config,
+  profileEditButton,
+  addNewCardButton,
+  profileTitleInput,
+  profileTitle,
+  profileDescription,
+  profileDescriptionInput,
+  addNewCardFormEl,
+  profileEditFormEl,
+  cardListEl,
+} from "../utils/constants.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithImage from "../components/PopupWithImage.js";
 import FormValidator from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
 import Card from "../components/Card.js";
-
-const profileEditButton = document.querySelector("#profile-edit-button");
-const addNewCardButton = document.querySelector(".profile__add-button");
-
-const profileTitleInput = document.querySelector("#profile-title-input");
-const profileDescriptionInput = document.querySelector(
-  "#profile-description-input"
-);
-
-const profileTitle = document.querySelector(".profile__title");
-const profileDescription = document.querySelector(".profile__description");
+import Section from "../components/Section.js";
 
 const pageUserInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
 });
 
-const addNewCardForm = new PopupWithForm(
-  "#add-image-popup",
-  //   addCardFormSubmit(e)
-  (inputValues) => {
-    const cardEl = new Card(inputValues, "#card-template");
-    const cardListEl = document.querySelector(".cards__list");
-    cardListEl.prepend(cardEl.getView());
-    console.log(cardEl);
-
-    // function renderCard(cardData, wrapper) {
-    //   const card = new Card(cardData, "#card-template");
-    //   wrapper.prepend(card.getView());
-    // }
-    //console.log("addNewCardForm handleFormSubmit function was used")
-  }
-);
-
-const addNewCardFormEl = document.querySelector("#add-image-form");
-const profileEditFormEl = document
-  .querySelector("#profile-edit-popup")
-  .querySelector(".popup__form");
+function fillProfileForm(e) {
+  profileTitleInput.value = profileTitle.textContent;
+  profileDescriptionInput.value = profileDescription.textContent;
+  //   profileEditForm();
+}
 
 const addFormValidator = new FormValidator(config, addNewCardFormEl);
-
 addFormValidator.enableValidation();
 
 const profileEditForm = new PopupWithForm(
   "#profile-edit-popup",
   (inputValues) => {
-    console.log(inputValues);
     pageUserInfo.setUserInfo(inputValues);
     editFormValidator.disableButton();
     profileEditForm.close();
@@ -61,15 +46,25 @@ const profileEditForm = new PopupWithForm(
 const editFormValidator = new FormValidator(config, profileEditFormEl);
 editFormValidator.enableValidation();
 
-// 8/10 this might be duplicative of the other stuff so ill keep it commented out
-// function handleProfileEditSubmit(e) {
-//   e.preventDefault();
-//   //   profileTitle.textContent = profileTitleInput.value;
-//   //   profileDescription.textContent = profileDescriptionInput.value;
-//   //   closePopup(profileEditPopup);
-//   /* Disable Submit Button will only run after the form receives its 1st successful input */
-//   editFormValidator.disableButton();
-// }
+const cardSection = new Section({
+  items: initialCards,
+  renderer: (initialCardData) => {
+    console.log(initialCardData);
+    const card = createCard(initialCardData);
+    // console.log(initialCardData);
+    //cardSection.addItem(card); // i just commented out this one, then commented it back in 12:48
+  },
+  cardElementsSelector: ".cards__list",
+});
+
+cardSection.renderItems();
+
+const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
+  const cardEl = createCardAddition(inputValues);
+  console.log(cardSection);
+  console.log(cardEl);
+  cardSection.addItem(cardEl);
+});
 
 function addNewCardListeners() {
   addNewCardButton.addEventListener("click", () => {
@@ -77,31 +72,6 @@ function addNewCardListeners() {
   });
 
   addNewCardForm.setEventListeners();
-
-  // 8/10 update tbh all these listeners are covered by the class
-
-  // close the popup if no changes are desired
-  // might already be in the class, check for sprint 8
-  //   const addImagePopupCloseButton = addImagePopup.querySelector(
-  //     "#add-image-popup-close-button"
-  //   );
-  // check if this works from the class for sprint 8
-  //   addImagePopupCloseButton.addEventListener("click", () => {
-  //     addNewCardForm.close();
-  //   });
-  // fix this for sprint 8
-  // save form info and close to show a new card
-  //   addNewCardForm.addEventListener("submit", () => {
-  //     // addCardFormSubmit(e);
-  //     addNewCardForm._submitForm();
-  //     addNewCardForm.close();
-  //   });
-}
-
-function fillProfileForm(e) {
-  profileTitleInput.value = profileTitle.textContent;
-  profileDescriptionInput.value = profileDescription.textContent;
-  //   profileEditForm();
 }
 
 function addProfileFormListeners() {
@@ -111,15 +81,57 @@ function addProfileFormListeners() {
     fillProfileForm(e);
     profileEditForm.setEventListeners();
   });
-  // close the popup if no changes are desired // this is already covered in the class so might delete
-  //   profileEditPopupCloseButton.addEventListener("click", () => {
-  //     profileEditForm.close();
-  //   });
-  // save and close the modified profile info
-
-  // fix this, put it back for sprint 8
-  //profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 }
+
+function handleCardClickFunc(initialCardData) {
+  const cardData = { name: initialCardData.name, link: initialCardData.link };
+  //   console.log(cardData);
+  const imageViewerPopup = new PopupWithImage("#popup-image-viewer", cardData);
+  imageViewerPopup.open();
+  imageViewerPopup.setEventListeners();
+}
+
+function createCard(inputValues) {
+  const cardEl = new Card(
+    inputValues,
+    "#card-template"
+    // handleCardClickFunc(inputValues)
+  );
+  cardListEl.append(cardEl.getView()); // 12:47 comment out // 12:48 comment back in
+  return cardEl.getView();
+}
+
+function createCardAddition(inputValues) {
+  const cardEl = new Card(
+    inputValues,
+    "#card-template"
+    // handleCardClickFunc(inputValues)
+  );
+  console.log(cardEl.getView());
+  //cardListEl.append(cardEl.getView()); // 12:47 comment out // 12:48 comment back in
+  return cardEl.getView();
+}
+
+function createCardList(cards) {
+  const cardList = cards.forEach((cardObject) => {
+    createCard(cardObject);
+  });
+  return cardList;
+}
+
+///// fix this before submitting sprint 8 ///
+//  handleImageEl(name, link) {
+//     // setup card info if user clicks to view image
+//     const cardData = { 'name': name, 'link': link };
+//     console.log(cardData);
+//     const imageViewerPopup = new PopupWithImage(
+//       "#popup-image-viewer",
+//       cardData
+//     );
+//     console.log(imageViewerPopup);
+//     imageViewerPopup.open();
+//     imageViewerPopup.setEventListeners();
+//   }
 
 addProfileFormListeners();
 addNewCardListeners();

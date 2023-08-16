@@ -3,10 +3,6 @@ import Popup from "./Popup.js";
 export default class PopupWithImage extends Popup {
   constructor(popupSelector) {
     super({ popupSelector });
-    // this._popupWithImageEl = this._popupElement;
-    // .querySelector(
-    //   ".popup__container_image"
-    // )
     this._imageViewerListEl = this._popupElement.querySelector(".image-viewer");
     this._imageViewerImage = this._popupElement.querySelector(
       ".image-viewer__image"
@@ -20,7 +16,6 @@ export default class PopupWithImage extends Popup {
   }
 
   open(cardData) {
-    console.log(cardData);
     super.open();
     // set the image to the name field of the object
     this._imageViewerImage.src = cardData.link;

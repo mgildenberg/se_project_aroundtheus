@@ -16,7 +16,6 @@ export default class Popup {
       evt.target.classList.contains("popup") ||
       evt.target.classList.contains("popup__close")
     ) {
-      //   closePopup(evt.currentTarget);
       this.close();
     }
   }
@@ -47,6 +46,7 @@ export default class Popup {
     this._popupElement.addEventListener("mousedown", (evt) => {
       this._handleClickAway(evt);
     });
+    // responding to close button clicks
     this._popupCloseButton.addEventListener("click", () => {
       this._popupElement.classList.remove("popup_opened");
     });

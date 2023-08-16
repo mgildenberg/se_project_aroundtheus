@@ -95,7 +95,6 @@ function createCardAddition(inputValues) {
     imageViewerPopup.open(inputValues);
     imageViewerPopup.setEventListeners();
   });
-  //   console.log(cardEl.getView());
   //cardListEl.append(cardEl.getView()); // this is the difference between createCard and createCardAddition
   return cardEl.getView();
 }

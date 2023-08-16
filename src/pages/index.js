@@ -29,9 +29,6 @@ function fillProfileForm(e) {
   profileDescriptionInput.value = profileDescription.textContent;
 }
 
-const addFormValidator = new FormValidator(config, addNewCardFormEl);
-addFormValidator.enableValidation();
-
 const profileEditForm = new PopupWithForm(
   "#profile-edit-popup",
   (inputValues) => {
@@ -56,10 +53,11 @@ const cardSection = new Section(
 
 cardSection.renderItems();
 
+const addFormValidator = new FormValidator(config, addNewCardFormEl);
+addFormValidator.enableValidation();
+
 const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
   const cardEl = createCardAddition(inputValues);
-  //   console.log(cardSection);
-  //   console.log(cardEl);
   addFormValidator.disableButton();
   cardSection.prependItem(cardEl);
 });
@@ -94,17 +92,9 @@ function createCard(inputValues) {
 function createCardAddition(inputValues) {
   const cardEl = new Card(inputValues, "#card-template", (inputValues) => {
     imageViewerPopup.open(inputValues);
-    imageViewerPopup.setEventListeners();
   });
   //cardListEl.append(cardEl.getView()); // this is the difference between createCard and createCardAddition
   return cardEl.getView();
-}
-
-function createCardList(cards) {
-  const cardList = cards.forEach((cardObject) => {
-    createCard(cardObject);
-  });
-  return cardList;
 }
 
 addProfileFormListeners();

@@ -37,7 +37,6 @@ export default class Popup {
   }
 
   setEventListeners() {
-    // this._popupElement close icon addEventListener("click", close)
     // Checklist says Esc listener must be prompted by popup open
     document.addEventListener("keydown", (evt) => {
       this._handleEscClose(evt);

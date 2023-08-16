@@ -12,13 +12,13 @@ class Section {
     });
   }
 
-  addItem(element) {
-    this._cardElementsContainer.append(element);
-  }
-
-  // prependItem(element) {
-  //   this._cardElementsContainer.prepend(element);
+  // addItem(element) {
+  //   this._cardElementsContainer.append(element);
   // }
+
+  prependItem(element) {
+    this._cardElementsContainer.prepend(element);
+  }
 }
 
 export default Section;

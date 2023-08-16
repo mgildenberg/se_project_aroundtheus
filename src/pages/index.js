@@ -60,7 +60,8 @@ const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
   const cardEl = createCardAddition(inputValues);
   //   console.log(cardSection);
   //   console.log(cardEl);
-  cardSection.addItem(cardEl);
+  addFormValidator.disableButton();
+  cardSection.prependItem(cardEl);
 });
 
 function addNewCardListeners() {
@@ -83,11 +84,11 @@ function addProfileFormListeners() {
 const imageViewerPopup = new PopupWithImage("#popup-image-viewer");
 
 function createCard(inputValues) {
-  const cardEl = new Card(inputValues, "#card-template", (inputValues) =>
-    imageViewerPopup.open(inputValues)
-  );
+  const cardEl = new Card(inputValues, "#card-template", (inputValues) => {
+    imageViewerPopup.open(inputValues);
+  });
   cardListEl.append(cardEl.getView());
-  return cardEl.getView();
+  //return cardEl.getView();
 }
 
 function createCardAddition(inputValues) {

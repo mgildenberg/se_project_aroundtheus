@@ -1,5 +1,4 @@
 import "./index.css";
-// import Popup from "../components/Popup.js";
 import {
   initialCards,
   config,
@@ -28,7 +27,6 @@ const pageUserInfo = new UserInfo({
 function fillProfileForm(e) {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-  //   profileEditForm();
 }
 
 const addFormValidator = new FormValidator(config, addNewCardFormEl);
@@ -46,23 +44,22 @@ const profileEditForm = new PopupWithForm(
 const editFormValidator = new FormValidator(config, profileEditFormEl);
 editFormValidator.enableValidation();
 
-const cardSection = new Section({
-  items: initialCards,
-  renderer: (initialCardData) => {
-    console.log(initialCardData);
-    const card = createCard(initialCardData);
-    // console.log(initialCardData);
-    //cardSection.addItem(card); // i just commented out this one, then commented it back in 12:48
+const cardSection = new Section(
+  {
+    items: initialCards,
+    renderer: (initialCardData) => {
+      const card = createCard(initialCardData);
+    },
   },
-  cardElementsSelector: ".cards__list",
-});
+  ".cards__list"
+);
 
 cardSection.renderItems();
 
 const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
   const cardEl = createCardAddition(inputValues);
-  console.log(cardSection);
-  console.log(cardEl);
+  //   console.log(cardSection);
+  //   console.log(cardEl);
   cardSection.addItem(cardEl);
 });
 
@@ -83,32 +80,23 @@ function addProfileFormListeners() {
   });
 }
 
-function handleCardClickFunc(initialCardData) {
-  const cardData = { name: initialCardData.name, link: initialCardData.link };
-  //   console.log(cardData);
-  const imageViewerPopup = new PopupWithImage("#popup-image-viewer", cardData);
-  imageViewerPopup.open();
-  imageViewerPopup.setEventListeners();
-}
+const imageViewerPopup = new PopupWithImage("#popup-image-viewer");
 
 function createCard(inputValues) {
-  const cardEl = new Card(
-    inputValues,
-    "#card-template"
-    // handleCardClickFunc(inputValues)
+  const cardEl = new Card(inputValues, "#card-template", (inputValues) =>
+    imageViewerPopup.open(inputValues)
   );
-  cardListEl.append(cardEl.getView()); // 12:47 comment out // 12:48 comment back in
+  cardListEl.append(cardEl.getView());
   return cardEl.getView();
 }
 
 function createCardAddition(inputValues) {
-  const cardEl = new Card(
-    inputValues,
-    "#card-template"
-    // handleCardClickFunc(inputValues)
-  );
-  console.log(cardEl.getView());
-  //cardListEl.append(cardEl.getView()); // 12:47 comment out // 12:48 comment back in
+  const cardEl = new Card(inputValues, "#card-template", (inputValues) => {
+    imageViewerPopup.open(inputValues);
+    imageViewerPopup.setEventListeners();
+  });
+  //   console.log(cardEl.getView());
+  //cardListEl.append(cardEl.getView()); // this is the difference between createCard and createCardAddition
   return cardEl.getView();
 }
 
@@ -118,20 +106,6 @@ function createCardList(cards) {
   });
   return cardList;
 }
-
-///// fix this before submitting sprint 8 ///
-//  handleImageEl(name, link) {
-//     // setup card info if user clicks to view image
-//     const cardData = { 'name': name, 'link': link };
-//     console.log(cardData);
-//     const imageViewerPopup = new PopupWithImage(
-//       "#popup-image-viewer",
-//       cardData
-//     );
-//     console.log(imageViewerPopup);
-//     imageViewerPopup.open();
-//     imageViewerPopup.setEventListeners();
-//   }
 
 addProfileFormListeners();
 addNewCardListeners();

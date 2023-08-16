@@ -17,15 +17,15 @@ class Section {
       this._renderer(item);
     });
 
-    console.log("in renderItems");
+    // console.log("in renderItems");
   }
 
   addItem(element) {
     // console.log(element);
     // console.log(this._cardElementsContainer);
-    const cardListEl = document.querySelector(".cards__list");
-    cardListEl.append(element);
-    //this._cardElementsContainer.append(element);
+    // const cardListEl = document.querySelector(".cards__list");
+    // cardListEl.append(element);
+    this._cardElementsContainer.append(element);
     // newCardElementsContainer.append(element);
   }
 

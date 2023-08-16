@@ -13,11 +13,11 @@
 // delete the private method below but use its logic as described above
 
 export default class Card {
-  constructor({ name, link }, cardSelector) {
+  constructor({ name, link }, cardSelector, handleCardClick) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
-    // this._handleCardClick = handleCardClick;
+    this._handleCardClick = handleCardClick;
   }
 
   _setEventListeners() {
@@ -26,9 +26,22 @@ export default class Card {
       this._handleLikeButton();
     });
 
+    // this._cardImageEl.addEventListener("click", (e) => {
+    //   console.log("image clicked");
+    //   console.log(this._handleCardClick);
+    //   const clickInputs = {
+    //     name: e.currentTarget.name,
+    //     link: e.currentTarget.src,
+    //   };
+    //   this._handleCardClick({ clickInputs });
+    // });
     this._cardImageEl.addEventListener("click", () => {
-      console.log("image clicked");
-      //this._handleImageEl();
+      this._handleCardClick({ name: this._name, link: this._link });
+      // console.log("we are in the event listener");
+      // console.log("card event listener", {
+      //   name: this._name,
+      //   link: this._link,
+      // });
     });
 
     this._cardTrashButton.addEventListener("click", () => {

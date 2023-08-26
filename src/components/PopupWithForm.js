@@ -31,9 +31,5 @@ export default class PopupWithForm extends Popup {
   close() {
     this._popupForm.reset(); // need this line to avoid saving the last input
     super.close();
-    // this._popupForm.removeEventListener("submit", () => {
-    //   this._submitForm();
-    //   this.reset();
-    // }); // commenting out per reviewer feedback
   }
 }

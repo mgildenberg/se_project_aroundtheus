@@ -3,13 +3,9 @@ import Popup from "./Popup.js";
 export default class PopupWithImage extends Popup {
   constructor(popupSelector) {
     super({ popupSelector });
-    // this._imageViewerListEl = this._popupElement.querySelector(".image-viewer");
     this._imageViewerImage = this._popupElement.querySelector(
       ".image-viewer__image"
     );
-
-    // this._imageViewerCardImage =
-    //   this._popupElement.querySelector(".card__image");
     this._imageViewerTitle = this._popupElement.querySelector(
       ".image-viewer__title"
     );
@@ -23,6 +19,5 @@ export default class PopupWithImage extends Popup {
     this._imageViewerImage.alt = `Photo of ${cardData.link}`;
     // set the card title to the name field of the object, too
     this._imageViewerTitle.textContent = cardData.name;
-    //super.setEventListeners(); // commenting out, but called in index.js
   }
 }

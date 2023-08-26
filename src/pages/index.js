@@ -5,12 +5,9 @@ import {
   profileEditButton,
   addNewCardButton,
   profileTitleInput,
-  // profileTitle,
-  // profileDescription,
   profileDescriptionInput,
   addNewCardFormEl,
   profileEditFormEl,
-  // cardListEl,
 } from "../utils/constants.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -34,13 +31,15 @@ const profileEditForm = new PopupWithForm(
   "#profile-edit-popup",
   (inputValues) => {
     pageUserInfo.setUserInfo(inputValues);
-    // editFormValidator.disableButton(); // moved per reviewer feedback
     profileEditForm.close();
   }
 );
 
 const editFormValidator = new FormValidator(config, profileEditFormEl);
 editFormValidator.enableValidation();
+
+const addFormValidator = new FormValidator(config, addNewCardFormEl);
+addFormValidator.enableValidation();
 
 const cardSection = new Section(
   {
@@ -55,19 +54,15 @@ const cardSection = new Section(
 
 cardSection.renderItems();
 
-const addFormValidator = new FormValidator(config, addNewCardFormEl);
-addFormValidator.enableValidation();
-
 const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
   const cardEl = createCard(inputValues);
-  // addFormValidator.disableButton(); // removed per reviewer feedback
   cardSection.prependItem(cardEl);
 });
 
 function addNewCardListeners() {
   addNewCardButton.addEventListener("click", () => {
+    addFormValidator.disableButton(); // disable button ahead of open func
     addNewCardForm.open();
-    addFormValidator.disableButton();
   });
 
   addNewCardForm.setEventListeners();
@@ -76,8 +71,8 @@ function addNewCardListeners() {
 function addProfileFormListeners() {
   profileEditButton.addEventListener("click", (e) => {
     // open popup only upon clicking edit button
+    editFormValidator.disableButton(); // disable button ahead of open func
     profileEditForm.open();
-    editFormValidator.disableButton();
     fillProfileForm(e);
     profileEditForm.setEventListeners();
   });

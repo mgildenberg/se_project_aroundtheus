@@ -23,12 +23,7 @@ export default class Popup {
   close() {
     // closes popup
     this._popupElement.classList.remove("popup_opened");
-    // this._popupElement.removeEventListener("mousedown", (evt) => {
-    //   this._handleClickAway(evt);
-    // }); // commented out per reviewer feedback
-    // document.removeEventListener("keydown", (evt) => {
-    //   this._handleEscClose(evt);
-    // }); rewrite for Esc key event listener per reviewer feedback below
+    // rewrite for Esc key event listener
     document.removeEventListener("keydown", this._handleEscClose);
   }
 
@@ -42,13 +37,9 @@ export default class Popup {
   }
 
   setEventListeners() {
-    // Click Away makes sense to add upon popup open too
+    // Click Away is the remaining event listener
     this._popupElement.addEventListener("mousedown", (evt) => {
       this._handleClickAway(evt);
     });
-    // responding to close button clicks
-    // this._popupCloseButton.addEventListener("click", () => {
-    //   this._popupElement.classList.remove("popup_opened");
-    // }); // this is no longer needed per reviewer feedback
   }
 }

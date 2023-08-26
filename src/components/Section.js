@@ -12,10 +12,6 @@ class Section {
     });
   }
 
-  // addItem(element) {
-  //   this._cardElementsContainer.append(element);
-  // }
-
   prependItem(element) {
     this._cardElementsContainer.prepend(element);
   }

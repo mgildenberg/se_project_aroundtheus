@@ -42,17 +42,8 @@ const profileDescriptionInput = document.querySelector(
   "#profile-description-input"
 );
 
-const profileTitle = document.querySelector(".profile__title");
-const profileDescription = document.querySelector(".profile__description");
-
-// document.querySelector("#add-image-form");
 const addNewCardFormEl = document.forms["add-image-form"];
 const profileEditFormEl = document.forms["edit-profile-form"];
-// document
-//   .querySelector("#profile-edit-popup")
-//   .querySelector(".popup__form");
-
-const cardListEl = document.querySelector(".cards__list");
 
 export {
   initialCards,
@@ -60,10 +51,7 @@ export {
   profileEditButton,
   addNewCardButton,
   profileTitleInput,
-  profileTitle,
-  profileDescription,
   profileDescriptionInput,
   addNewCardFormEl,
   profileEditFormEl,
-  cardListEl,
 };

@@ -7,7 +7,6 @@ export default class UserInfo {
   getUserInfo() {
     this._name = this._profileTitle.textContent;
     this._job = this._profileDescription.textContent;
-    console.log({ name: this._name, job: this._job });
     return { name: this._name, job: this._job };
   }
 

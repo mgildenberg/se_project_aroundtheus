@@ -87,7 +87,7 @@ class FormValidator {
     });
     // initialize form with the submit button disabled by default
     this.disableButton();
-    this._setEventListeners(formEl);
+    this._setEventListeners();
   }
 }
 

@@ -45,10 +45,12 @@ const profileDescriptionInput = document.querySelector(
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
-const addNewCardFormEl = document.querySelector("#add-image-form");
-const profileEditFormEl = document
-  .querySelector("#profile-edit-popup")
-  .querySelector(".popup__form");
+// document.querySelector("#add-image-form");
+const addNewCardFormEl = document.forms["add-image-form"];
+const profileEditFormEl = document.forms["edit-profile-form"];
+// document
+//   .querySelector("#profile-edit-popup")
+//   .querySelector(".popup__form");
 
 const cardListEl = document.querySelector(".cards__list");
 

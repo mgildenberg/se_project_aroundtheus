@@ -5,12 +5,12 @@ import {
   profileEditButton,
   addNewCardButton,
   profileTitleInput,
-  profileTitle,
-  profileDescription,
+  // profileTitle,
+  // profileDescription,
   profileDescriptionInput,
   addNewCardFormEl,
   profileEditFormEl,
-  cardListEl,
+  // cardListEl,
 } from "../utils/constants.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -25,15 +25,16 @@ const pageUserInfo = new UserInfo({
 });
 
 function fillProfileForm(e) {
-  profileTitleInput.value = profileTitle.textContent;
-  profileDescriptionInput.value = profileDescription.textContent;
+  const currentInfo = pageUserInfo.getUserInfo();
+  profileTitleInput.value = currentInfo.name;
+  profileDescriptionInput.value = currentInfo.job;
 }
 
 const profileEditForm = new PopupWithForm(
   "#profile-edit-popup",
   (inputValues) => {
     pageUserInfo.setUserInfo(inputValues);
-    editFormValidator.disableButton();
+    // editFormValidator.disableButton(); // moved per reviewer feedback
     profileEditForm.close();
   }
 );
@@ -46,6 +47,7 @@ const cardSection = new Section(
     items: initialCards,
     renderer: (initialCardData) => {
       const card = createCard(initialCardData);
+      cardSection.prependItem(card);
     },
   },
   ".cards__list"
@@ -57,14 +59,15 @@ const addFormValidator = new FormValidator(config, addNewCardFormEl);
 addFormValidator.enableValidation();
 
 const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
-  const cardEl = createCardAddition(inputValues);
-  addFormValidator.disableButton();
+  const cardEl = createCard(inputValues);
+  // addFormValidator.disableButton(); // removed per reviewer feedback
   cardSection.prependItem(cardEl);
 });
 
 function addNewCardListeners() {
   addNewCardButton.addEventListener("click", () => {
     addNewCardForm.open();
+    addFormValidator.disableButton();
   });
 
   addNewCardForm.setEventListeners();
@@ -74,26 +77,19 @@ function addProfileFormListeners() {
   profileEditButton.addEventListener("click", (e) => {
     // open popup only upon clicking edit button
     profileEditForm.open();
+    editFormValidator.disableButton();
     fillProfileForm(e);
     profileEditForm.setEventListeners();
   });
 }
 
 const imageViewerPopup = new PopupWithImage("#popup-image-viewer");
+imageViewerPopup.setEventListeners();
 
 function createCard(inputValues) {
   const cardEl = new Card(inputValues, "#card-template", (inputValues) => {
     imageViewerPopup.open(inputValues);
   });
-  cardListEl.append(cardEl.getView());
-  //return cardEl.getView();
-}
-
-function createCardAddition(inputValues) {
-  const cardEl = new Card(inputValues, "#card-template", (inputValues) => {
-    imageViewerPopup.open(inputValues);
-  });
-  //cardListEl.append(cardEl.getView()); // this is the difference between createCard and createCardAddition
   return cardEl.getView();
 }
 

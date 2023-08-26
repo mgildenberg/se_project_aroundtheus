@@ -32,6 +32,7 @@ export default class Card {
 
   _handleTrashButton() {
     this._cardElement.remove();
+    this._cardElement = null;
   }
 
   _replaceImageData() {

@@ -34,6 +34,7 @@ const profileEditForm = new PopupWithForm(
     profileEditForm.close();
   }
 );
+profileEditForm.setEventListeners();
 
 const editFormValidator = new FormValidator(config, profileEditFormEl);
 editFormValidator.enableValidation();
@@ -74,7 +75,6 @@ function addProfileFormListeners() {
     editFormValidator.disableButton(); // disable button ahead of open func
     profileEditForm.open();
     fillProfileForm(e);
-    profileEditForm.setEventListeners();
   });
 }
 

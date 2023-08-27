@@ -1,23 +1,13 @@
 export default class Popup {
   constructor({ popupSelector }) {
     this._popupElement = document.querySelector(popupSelector);
-    this._popupCloseButton = this._popupElement.querySelector(".popup__close");
   }
 
-  _handleEscClose(evt) {
-    // listens for esc button
-    if (evt.key == "Escape") {
-      this.close();
-    }
-  }
-
-  _handleClickAway(evt) {
-    if (
-      evt.target.classList.contains("popup") ||
-      evt.target.classList.contains("popup__close")
-    ) {
-      this.close();
-    }
+  open() {
+    // opens popup
+    console.log("popup class open");
+    this._popupElement.classList.add("popup_opened");
+    document.addEventListener("keydown", this._handleEscClose);
   }
 
   close() {
@@ -27,19 +17,26 @@ export default class Popup {
     document.removeEventListener("keydown", this._handleEscClose);
   }
 
-  open() {
-    // opens popup
-    this._popupElement.classList.add("popup_opened");
-    // Checklist says Esc listener must be prompted by popup open
-    document.addEventListener("keydown", (evt) => {
-      this._handleEscClose(evt);
-    });
-  }
+  _handleEscClose = (evt) => {
+    // arrow function binds this to the popup so event listener removal works
+    // listens for esc button
+    if (evt.key == "Escape") {
+      this.close();
+    }
+  };
+
+  _handleClickAway = (evt) => {
+    // arrow function binds this to the popup
+    if (
+      evt.target.classList.contains("popup") ||
+      evt.target.classList.contains("popup__close")
+    ) {
+      this.close();
+    }
+  };
 
   setEventListeners() {
     // Click Away is the remaining event listener
-    this._popupElement.addEventListener("mousedown", (evt) => {
-      this._handleClickAway(evt);
-    });
+    this._popupElement.addEventListener("mousedown", this._handleClickAway);
   }
 }

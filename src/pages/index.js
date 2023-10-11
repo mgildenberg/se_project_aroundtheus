@@ -15,11 +15,47 @@ import FormValidator from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
 import Card from "../components/Card.js";
 import Section from "../components/Section.js";
+import Api from "../components/Api.js";
 
 const pageUserInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
+  avatorSelector: ".profile__image",
 });
+
+const api = new Api({
+  baseURL: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "98cf51ba-481b-4eec-9343-23efbe8fbf82",
+    "Content-Type": "application/json",
+  },
+});
+
+let user = api.getUserInfo();
+let apiCards = api.getInitialCards();
+
+Promise.all([user, apiCards]).then(([userData, initialCards]) => {
+  user = userData._id;
+  pageUserInfo.setUserInfo(userData.name, userData.about);
+
+  const cardSection = new Section(
+    {
+      items: initialCards,
+      renderer: (initialCardData) => {
+        const card = createCard(initialCardData);
+        cardSection.prependItem(card);
+      },
+    },
+    ".cards__list"
+  );
+
+  cardSection.renderItems();
+  // pageUserInfo.setUserAvatar(userData.avatar)
+});
+// .catch(() => (err) => console.log(err));
+
+// console.log(user);
+// console.log(apiCards);
 
 function fillProfileForm(e) {
   const currentInfo = pageUserInfo.getUserInfo();
@@ -42,18 +78,18 @@ editFormValidator.enableValidation();
 const addFormValidator = new FormValidator(config, addNewCardFormEl);
 addFormValidator.enableValidation();
 
-const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: (initialCardData) => {
-      const card = createCard(initialCardData);
-      cardSection.prependItem(card);
-    },
-  },
-  ".cards__list"
-);
+// const cardSection = new Section(
+//   {
+//     items: initialCards,
+//     renderer: (initialCardData) => {
+//       const card = createCard(initialCardData);
+//       cardSection.prependItem(card);
+//     },
+//   },
+//   ".cards__list"
+// );
 
-cardSection.renderItems();
+// cardSection.renderItems();
 
 const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
   const cardEl = createCard(inputValues);

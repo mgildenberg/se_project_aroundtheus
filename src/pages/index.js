@@ -36,7 +36,7 @@ let apiCards = api.getInitialCards();
 
 Promise.all([user, apiCards]).then(([userData, initialCards]) => {
   user = userData._id;
-  pageUserInfo.setUserInfo(userData.name, userData.about);
+  pageUserInfo.setUserInfo(userData);
 
   const cardSection = new Section(
     {
@@ -66,7 +66,8 @@ function fillProfileForm(e) {
 const profileEditForm = new PopupWithForm(
   "#profile-edit-popup",
   (inputValues) => {
-    pageUserInfo.setUserInfo(inputValues);
+    //pageUserInfo.setUserInfo(inputValues);
+    api.updateUserInfo(inputValues);
     profileEditForm.close();
   }
 );

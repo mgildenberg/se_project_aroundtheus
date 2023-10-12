@@ -27,7 +27,7 @@ class Api {
   }
 
   addNewCard(name, link) {
-    this._headers["Content-Type"] = "application/json";
+    // this._headers["Content-Type"] = "application/json";
     return fetch(`${this._baseURL}/cards`, {
       method: "POST",
       headers: this._headers,
@@ -40,13 +40,17 @@ class Api {
     });
   }
 
-  updateUserInfo(name, job) {
+  updateUserInfo(inputValues) {
+    console.log("updateUserInfo", inputValues);
+    const inputValuesName = inputValues.title;
+    const inputValuesAbout = inputValues.about;
+
     return fetch(`${this._baseURL}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        about: job,
+        name: inputValuesName,
+        about: inputValuesAbout,
       }),
     }).then((res) => {
       return this._checkServerResponse(res);

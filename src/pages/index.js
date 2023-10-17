@@ -10,6 +10,7 @@ import {
   profileEditFormEl,
 } from "../utils/constants.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithDelete from "../components/PopupWithDelete.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import FormValidator from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
@@ -20,7 +21,8 @@ import Api from "../components/Api.js";
 const pageUserInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
-  avatorSelector: ".profile__image",
+  avatarSelector: "#profile-avatar",
+  // avatorSelector: ".profile__image", idk why but this doesn't work
 });
 
 const api = new Api({
@@ -36,7 +38,10 @@ let apiCards = api.getInitialCards();
 
 Promise.all([user, apiCards]).then(([userData, initialCards]) => {
   user = userData._id;
+  // console.log("userData", userData);
   pageUserInfo.setUserInfo(userData);
+  pageUserInfo.setUserAvatar(userData);
+  console.log(initialCards);
 
   const cardSection = new Section(
     {
@@ -93,7 +98,8 @@ addFormValidator.enableValidation();
 // cardSection.renderItems();
 
 const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
-  const cardEl = createCard(inputValues);
+  // const cardEl = createCard(inputValues);
+  const cardEl = api.addNewCard(inputValues);
   cardSection.prependItem(cardEl);
 });
 
@@ -118,10 +124,20 @@ function addProfileFormListeners() {
 const imageViewerPopup = new PopupWithImage("#popup-image-viewer");
 imageViewerPopup.setEventListeners();
 
+const deleteCardPopup = new PopupWithDelete("#delete-card-popup");
+deleteCardPopup.setEventListeners();
+
 function createCard(inputValues) {
-  const cardEl = new Card(inputValues, "#card-template", (inputValues) => {
-    imageViewerPopup.open(inputValues);
-  });
+  const cardEl = new Card(
+    inputValues,
+    "#card-template",
+    (inputValues) => {
+      imageViewerPopup.open(inputValues);
+    },
+    (inputValues) => {
+      deleteCardPopup.open(); //inputValues);
+    }
+  );
   return cardEl.getView();
 }
 

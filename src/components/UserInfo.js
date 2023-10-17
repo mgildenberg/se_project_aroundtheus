@@ -2,7 +2,7 @@ export default class UserInfo {
   constructor({ nameSelector, jobSelector, avatarSelector }) {
     this._profileTitle = document.querySelector(nameSelector);
     this._profileDescription = document.querySelector(jobSelector);
-    // this._avatarElement = document.querySelector(avatarSelector);
+    this._avatarElement = document.querySelector(avatarSelector);
   }
 
   getUserInfo() {
@@ -14,11 +14,11 @@ export default class UserInfo {
   setUserInfo(inputValues) {
     this._profileTitle.textContent = inputValues.name;
     this._profileDescription.textContent = inputValues.about;
+    // console.log(this._avatarElement);
   }
 
-  // setUserAvatar(avatar) {
-  //   console.log(this._avatarElement);
-  //   this._avatarElement.src = avatar;
-  //   this._avatarElement.alt = this._profileTitle.textContent;
-  // }
+  setUserAvatar(inputValues) {
+    this._avatarElement.src = inputValues.avatar;
+    this._avatarElement.alt = this._profileTitle.textContent;
+  }
 }

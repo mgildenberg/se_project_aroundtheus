@@ -40,6 +40,10 @@
   background-color: transparent;
 }
 
+.popup__container_delete {
+  max-height: 181px;
+}
+
 .popup__close {
   background-image: url("../images/close-icon.svg");
   background-repeat: no-repeat;

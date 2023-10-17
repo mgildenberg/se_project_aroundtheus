@@ -1,9 +1,20 @@
 export default class Card {
-  constructor({ name, link }, cardSelector, handleCardClick) {
+  constructor(
+    { name, link, _id, isLiked },
+    cardSelector,
+    handleCardClick,
+    handleDeleteClick
+    // cardId,
+    // userId
+  ) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._handleDeleteClick = handleDeleteClick;
+    this._cardId = _id;
+    this._isLiked = isLiked;
+    // this._userId = userId;
   }
 
   _setEventListeners() {
@@ -22,7 +33,11 @@ export default class Card {
       ".card__trash-button"
     );
     this._cardTrashButton.addEventListener("click", () => {
-      this._handleTrashButton();
+      console.log("card Trash Button clicked");
+      console.log("card ID is ", this._cardId);
+      this._handleDeleteClick(this._cardId);
+      // this._handleDeleteClick(this._cardId, this._userId);
+      // this._handleTrashButton();
     });
   }
 

@@ -9,8 +9,8 @@ class Api {
   }
 
   getUserInfo() {
-    console.log("in getUseInfo");
-    console.log(this._baseURL, this._headers);
+    // console.log("in getUseInfo");
+    // console.log(this._baseURL, this._headers);
     return fetch(`${this._baseURL}/users/me`, {
       headers: this._headers,
     }).then((res) => {
@@ -26,14 +26,30 @@ class Api {
     });
   }
 
-  addNewCard(name, link) {
+  addNewCard(inputValues) {
+    // console.log("addNewCard", inputValues);
     // this._headers["Content-Type"] = "application/json";
     return fetch(`${this._baseURL}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        link: link,
+        name: inputValues.name,
+        link: inputValues.link,
+      }),
+    }).then((res) => {
+      return this._checkServerResponse(res);
+    });
+  }
+
+  deleteCard(inputValues) {
+    console.log("deleteCard", inputValues);
+    // this._headers["Content-Type"] = "application/json";
+    return fetch(`${this._baseURL}/cards/cardId`, {
+      method: "DELETE",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: inputValues.name,
+        link: inputValues.link,
       }),
     }).then((res) => {
       return this._checkServerResponse(res);

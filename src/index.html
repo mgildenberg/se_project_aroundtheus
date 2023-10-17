@@ -29,6 +29,7 @@
             class="profile__image"
             src="<%=require('./images/jacques-cousteau.png')%>"
             alt="avatar"
+            id="profile-avatar"
           />
           <div class="profile__info">
             <h1 class="profile__title">Jacques Cousteau</h1>
@@ -90,6 +91,18 @@
             Save
           </button>
         </form>
+      </div>
+    </div>
+    <!-- Delete card popup -->
+    <div class="popup" id="delete-card-popup">
+      <div class="popup__container popup__container_delete">
+        <button
+          class="popup__close"
+          id="delete-card-close-button"
+          type="button"
+        ></button>
+        <h3 class="popup__heading">Are you sure?</h3>
+        <button class="popup__button" type="submit">Yes</button>
       </div>
     </div>
     <!-- Add card popup -->

@@ -1,6 +1,6 @@
 import Popup from "./Popup.js";
 
-export default class PopupWitDelete extends Popup {
+export default class PopupWithDelete extends Popup {
   constructor(popupSelector) {
     super({ popupSelector });
     //this._popupForm = this._popupElement.querySelector(".popup__form");

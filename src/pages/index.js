@@ -10,7 +10,7 @@ import {
   profileEditFormEl,
 } from "../utils/constants.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-import PopupWithDelete from "../components/PopupWithDelete.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import FormValidator from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
@@ -124,7 +124,7 @@ function addProfileFormListeners() {
 const imageViewerPopup = new PopupWithImage("#popup-image-viewer");
 imageViewerPopup.setEventListeners();
 
-const deleteCardPopup = new PopupWithDelete("#delete-card-popup");
+const deleteCardPopup = new PopupWithConfirmation("#delete-card-popup");
 deleteCardPopup.setEventListeners();
 
 function createCard(inputValues) {

@@ -44,13 +44,9 @@ class Api {
   deleteCard(inputValues) {
     console.log("deleteCard", inputValues);
     // this._headers["Content-Type"] = "application/json";
-    return fetch(`${this._baseURL}/cards/cardId`, {
+    return fetch(`${this._baseURL}/cards/${inputValues}`, {
       method: "DELETE",
       headers: this._headers,
-      body: JSON.stringify({
-        name: inputValues.name,
-        link: inputValues.link,
-      }),
     }).then((res) => {
       return this._checkServerResponse(res);
     });

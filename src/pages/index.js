@@ -135,7 +135,11 @@ function createCard(inputValues) {
       imageViewerPopup.open(inputValues);
     },
     (inputValues) => {
-      deleteCardPopup.open(); //inputValues);
+      deleteCardPopup.open();
+    }, //inputValues); //},
+    (inputValues) => {
+      // deleteCardPopup.open();
+      api.deleteCard(inputValues);
     }
   );
   return cardEl.getView();

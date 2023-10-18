@@ -3,7 +3,8 @@ export default class Card {
     { name, link, _id, isLiked },
     cardSelector,
     handleCardClick,
-    handleDeleteClick
+    handleTrashClick,
+    handleDeleteConfirm
     // cardId,
     // userId
   ) {
@@ -11,7 +12,8 @@ export default class Card {
     this._link = link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
-    this._handleDeleteClick = handleDeleteClick;
+    this._handleTrashClick = handleTrashClick;
+    this._handleDeleteConfirm = handleDeleteConfirm;
     this._cardId = _id;
     this._isLiked = isLiked;
     // this._userId = userId;
@@ -32,10 +34,11 @@ export default class Card {
     this._cardTrashButton = this._cardElement.querySelector(
       ".card__trash-button"
     );
-    this._cardTrashButton.addEventListener("click", () => {
+    this._cardTrashButton.addEventListener("click", (inputValues) => {
       console.log("card Trash Button clicked");
+      this._handleTrashClick(inputValues);
       console.log("card ID is ", this._cardId);
-      this._handleDeleteClick(this._cardId);
+      this._handleDeleteConfirm(this._cardId);
       // this._handleDeleteClick(this._cardId, this._userId);
       // this._handleTrashButton();
     });

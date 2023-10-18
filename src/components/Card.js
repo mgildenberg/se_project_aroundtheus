@@ -3,8 +3,8 @@ export default class Card {
     { name, link, _id, isLiked },
     cardSelector,
     handleCardClick,
-    handleTrashClick,
-    handleDeleteConfirm
+    handleTrashClick
+    // handleDeleteConfirm
     // cardId,
     // userId
   ) {
@@ -13,7 +13,7 @@ export default class Card {
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleTrashClick = handleTrashClick;
-    this._handleDeleteConfirm = handleDeleteConfirm;
+    // this._handleDeleteConfirm = handleDeleteConfirm;
     this._cardId = _id;
     this._isLiked = isLiked;
     // this._userId = userId;
@@ -38,7 +38,7 @@ export default class Card {
       console.log("card Trash Button clicked");
       this._handleTrashClick(inputValues);
       console.log("card ID is ", this._cardId);
-      this._handleDeleteConfirm(this._cardId);
+      // this._handleDeleteConfirm(this._cardId);
       // this._handleDeleteClick(this._cardId, this._userId);
       // this._handleTrashButton();
     });
@@ -48,7 +48,7 @@ export default class Card {
     this._likeButton.classList.toggle("card__like-button_active");
   }
 
-  _handleTrashButton() {
+  remove() {
     this._cardElement.remove();
     this._cardElement = null;
   }

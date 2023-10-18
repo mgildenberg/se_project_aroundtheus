@@ -29,12 +29,15 @@ const api = new Api({
   baseURL: "https://around-api.en.tripleten-services.com/v1",
   headers: {
     authorization: "98cf51ba-481b-4eec-9343-23efbe8fbf82",
+    // authorization: "3cbd7ab9-da2a-400a-bc4a-e4eebb0f631e",
+    // authorization: "855a635a-7ba2-42bf-af0e-10205bea653f",
     "Content-Type": "application/json",
   },
 });
 
 let user = api.getUserInfo();
 let apiCards = api.getInitialCards();
+let cardSection;
 
 Promise.all([user, apiCards]).then(([userData, initialCards]) => {
   user = userData._id;
@@ -43,7 +46,7 @@ Promise.all([user, apiCards]).then(([userData, initialCards]) => {
   pageUserInfo.setUserAvatar(userData);
   console.log(initialCards);
 
-  const cardSection = new Section(
+  cardSection = new Section(
     {
       items: initialCards,
       renderer: (initialCardData) => {
@@ -98,9 +101,10 @@ addFormValidator.enableValidation();
 // cardSection.renderItems();
 
 const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
-  // const cardEl = createCard(inputValues);
-  const cardEl = api.addNewCard(inputValues);
-  cardSection.prependItem(cardEl);
+  api.addNewCard(inputValues).then((data) => {
+    const newCard = createCard(data);
+    cardSection.prependItem(newCard);
+  });
 });
 
 function addNewCardListeners() {
@@ -127,22 +131,25 @@ imageViewerPopup.setEventListeners();
 const deleteCardPopup = new PopupWithConfirmation("#delete-card-popup");
 deleteCardPopup.setEventListeners();
 
-function createCard(inputValues) {
-  const cardEl = new Card(
-    inputValues,
+function createCard(cardData) {
+  const card = new Card(
+    cardData,
     "#card-template",
-    (inputValues) => {
-      imageViewerPopup.open(inputValues);
+    (cardData) => {
+      imageViewerPopup.open(cardData);
     },
-    (inputValues) => {
+    (event) => {
       deleteCardPopup.open();
-    }, //inputValues); //},
-    (inputValues) => {
-      // deleteCardPopup.open();
-      api.deleteCard(inputValues);
+      deleteCardPopup.setSubmitAction(() =>
+        api.deleteCard(cardData._id).then(() => card.remove())
+      );
     }
+    // (inputValues) => {
+    //   // function
+    //   api.deleteCard(inputValues).then(() => card.remove());
+    // }
   );
-  return cardEl.getView();
+  return card.getView();
 }
 
 addProfileFormListeners();

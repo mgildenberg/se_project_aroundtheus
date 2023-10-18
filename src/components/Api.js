@@ -41,16 +41,27 @@ class Api {
     });
   }
 
-  deleteCard(inputValues) {
-    console.log("deleteCard", inputValues);
+  deleteCard(cardId) {
+    console.log("deleteCard", cardId);
     // this._headers["Content-Type"] = "application/json";
-    return fetch(`${this._baseURL}/cards/${inputValues}`, {
+    return fetch(`${this._baseURL}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {
       return this._checkServerResponse(res);
     });
   }
+
+  // deleteCard(inputValues) {
+  //   console.log("deleteCard", inputValues);
+  //   // this._headers["Content-Type"] = "application/json";
+  //   return fetch(`${this._baseURL}/cards/${inputValues}`, {
+  //     method: "DELETE",
+  //     headers: this._headers,
+  //   }).then((res) => {
+  //     return this._checkServerResponse(res);
+  //   });
+  // }
 
   updateUserInfo(inputValues) {
     console.log("updateUserInfo", inputValues);

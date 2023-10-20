@@ -1,7 +1,6 @@
 .profile {
   display: flex;
   align-items: center;
-  /* padding-top: 40px; */
   margin: 36px auto 48px auto;
 }
 
@@ -14,6 +13,26 @@
   grid-gap: 7px 18px;
 }
 
+.profile__image-container {
+  position: relative;
+  margin: 0 24px 0 0;
+  align-items: center;
+}
+
+.profile__edit-button_avatar {
+  background: transparent url("../images/pencil-white.svg") center no-repeat;
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+  border: none;
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(2);
+}
+
 .profile__edit-button {
   background: transparent url("../images/pencil-white.svg") center no-repeat;
   height: 24px;
@@ -22,12 +41,30 @@
   grid-area: button;
   align-self: center;
   transition: opacity 0.5s ease-in-out;
-  /* margin: 0; */
 }
 
 .profile__edit-button:hover {
-  opacity: 0.6;
+  opacity: 0.9;
   cursor: pointer;
+}
+
+.profile__image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-position: center;
+}
+
+.profile__image:hover {
+  opacity: 0.2;
+  cursor: pointer;
+}
+
+.profile__edit-button_avatar:hover {
+  opacity: 1;
+  cursor: pointer;
+  background-color: rgb(0, 0, 0, 0.5);
 }
 
 .profile__add-button {
@@ -62,15 +99,6 @@
   /* max-width: ;  */
 }
 
-.profile__image {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  background-position: center;
-  margin-right: 24px;
-}
-
 .profile__title {
   font-family: "Inter", Arial, sans-serif;
   font-size: 42px;
@@ -84,8 +112,6 @@
   max-width: 373px;
 }
 
-/* @media screen and (max-width: ); */
-
 @media screen and (max-width: 768px) {
   .profile {
     max-width: calc(100% - 20px);
@@ -94,7 +120,6 @@
   }
 
   .page__section {
-    /* margin: 0 20px; */
     max-width: calc(100% - 40px);
   }
 
@@ -109,6 +134,10 @@
     /* width: 80%; */
     min-width: 282px;
     margin-top: 36px;
+  }
+
+  .profile__image-container {
+    margin: 0;
   }
 
   .profile__title {

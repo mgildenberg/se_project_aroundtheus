@@ -69,10 +69,15 @@ class Api {
     });
   }
 
-  getLikes(cardId) {
-    return fetch(`${this._baseURL}/cards/${cardId}/likes`, {
-      method: "GET",
+  updateAvatar(inputValues) {
+    // console.log("addNewCard", inputValues);
+    // this._headers["Content-Type"] = "application/json";
+    return fetch(`${this._baseURL}/users/me/avatar`, {
+      method: "PATCH",
       headers: this._headers,
+      body: JSON.stringify({
+        link: inputValues.link,
+      }),
     }).then((res) => {
       return this._checkServerResponse(res);
     });

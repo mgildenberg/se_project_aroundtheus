@@ -88,6 +88,11 @@ const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
   });
 });
 
+const editAvatarPopup = new PopupWithForm("#edit-avatar-popup", (inputValues) =>
+  api.updateAvatar(inputValues)
+);
+editAvatarPopup.setEventListeners();
+
 function addNewCardListeners() {
   addNewCardButton.addEventListener("click", () => {
     addFormValidator.disableButton(); // disable button ahead of open func

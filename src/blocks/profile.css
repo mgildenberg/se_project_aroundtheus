@@ -64,7 +64,7 @@
 .profile__edit-button_avatar:hover {
   opacity: 1;
   cursor: pointer;
-  background-color: rgb(0, 0, 0, 0.5);
+  background-color: rgb(0, 0, 0, 0.7);
 }
 
 .profile__add-button {

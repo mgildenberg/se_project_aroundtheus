@@ -3,11 +3,13 @@ import {
   initialCards,
   config,
   profileEditButton,
+  profileEditAvatarButton,
   addNewCardButton,
   profileTitleInput,
   profileDescriptionInput,
   addNewCardFormEl,
   profileEditFormEl,
+  profileEditAvatarFormEl,
 } from "../utils/constants.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
@@ -81,6 +83,12 @@ editFormValidator.enableValidation();
 const addFormValidator = new FormValidator(config, addNewCardFormEl);
 addFormValidator.enableValidation();
 
+const editAvatarFormValidator = new FormValidator(
+  config,
+  profileEditAvatarFormEl
+);
+editAvatarFormValidator.enableValidation();
+
 const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
   api.addNewCard(inputValues).then((data) => {
     const newCard = createCard(data);
@@ -88,10 +96,28 @@ const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
   });
 });
 
-const editAvatarPopup = new PopupWithForm("#edit-avatar-popup", (inputValues) =>
-  api.updateAvatar(inputValues)
+const editAvatarPopup = new PopupWithForm(
+  "#edit-avatar-popup",
+  (inputValues) => {
+    api.updateAvatar(inputValues).then(() => {
+      api.getUserInfo().then((userData) => {
+        pageUserInfo.setUserAvatar(userData);
+      });
+    });
+  }
 );
-editAvatarPopup.setEventListeners();
+
+function addEditAvatarPopupListeners() {
+  profileEditAvatarButton.addEventListener("click", () => {
+    // event.preventDefault();
+    console.log("edit avatar clicked");
+    // editAvatarFormValidator.disableButton(); // disable button ahead of open func
+    editAvatarPopup.open();
+  });
+
+  editAvatarPopup.setEventListeners();
+}
+addEditAvatarPopupListeners();
 
 function addNewCardListeners() {
   addNewCardButton.addEventListener("click", () => {

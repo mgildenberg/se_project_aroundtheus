@@ -34,6 +34,10 @@ const config = {
   errorClass: "popup__error_visible",
 };
 
+const profileEditAvatarButton = document.querySelector(
+  // ".profile__image-container"
+  ".profile__edit-button_avatar"
+);
 const profileEditButton = document.querySelector("#profile-edit-button");
 const addNewCardButton = document.querySelector(".profile__add-button");
 
@@ -44,14 +48,17 @@ const profileDescriptionInput = document.querySelector(
 
 const addNewCardFormEl = document.forms["add-image-form"];
 const profileEditFormEl = document.forms["edit-profile-form"];
+const profileEditAvatarFormEl = document.forms["edit-avatar-form"];
 
 export {
   initialCards,
   config,
   profileEditButton,
+  profileEditAvatarButton,
   addNewCardButton,
   profileTitleInput,
   profileDescriptionInput,
   addNewCardFormEl,
   profileEditFormEl,
+  profileEditAvatarFormEl,
 };

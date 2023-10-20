@@ -70,13 +70,16 @@ class Api {
   }
 
   updateAvatar(inputValues) {
+    console.log(inputValues);
+    let inputValuesLink = inputValues.link;
+    console.log(inputValuesLink);
     // console.log("addNewCard", inputValues);
     // this._headers["Content-Type"] = "application/json";
     return fetch(`${this._baseURL}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        link: inputValues.link,
+        avatar: inputValuesLink,
       }),
     }).then((res) => {
       return this._checkServerResponse(res);

@@ -3,28 +3,32 @@ export default class Card {
     { name, link, _id, isLiked },
     cardSelector,
     handleCardClick,
-    handleTrashClick
-    // handleDeleteConfirm
-    // cardId,
-    // userId
+    handleTrashClick,
+    handleLikeClick
   ) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleTrashClick = handleTrashClick;
+    this._handleLikeClick = handleLikeClick;
     // this._handleDeleteConfirm = handleDeleteConfirm;
     this._cardId = _id;
     this._isLiked = isLiked;
+    this._cardElement = document
+      .querySelector(this._cardSelector)
+      .cloneNode(true).content.firstElementChild;
+    this._likeButton = this._cardElement.querySelector(".card__like-button");
     // this._userId = userId;
   }
 
   _setEventListeners() {
     // ".card__like-button
 
-    this._likeButton = this._cardElement.querySelector(".card__like-button");
     this._likeButton.addEventListener("click", () => {
+      console.log("like button clicked");
       this._handleLikeButton();
+      this.toggleLikeStyle();
     });
 
     this._cardImageEl.addEventListener("click", () => {
@@ -38,14 +42,29 @@ export default class Card {
       console.log("card Trash Button clicked");
       this._handleTrashClick(inputValues);
       console.log("card ID is ", this._cardId);
-      // this._handleDeleteConfirm(this._cardId);
-      // this._handleDeleteClick(this._cardId, this._userId);
-      // this._handleTrashButton();
     });
   }
 
-  _handleLikeButton() {
+  getLikes() {
+    return this._isLiked;
+  }
+
+  _setLikeStyle() {
+    if (this._isLiked) {
+      this._likeButton.classList.add("card__like-button_active");
+    }
+  }
+
+  toggleLikeStyle() {
     this._likeButton.classList.toggle("card__like-button_active");
+  }
+
+  // setLikeAction(handleLikeClick) {
+  //   this._handleLikeClick = handleLikeClick;
+  // }
+
+  _handleLikeButton() {
+    this._handleLikeClick(this._cardId);
   }
 
   remove() {
@@ -60,14 +79,10 @@ export default class Card {
   }
 
   getView() {
-    // get the card view
-    this._cardElement = document
-      .querySelector(this._cardSelector)
-      .cloneNode(true).content.firstElementChild;
-
     this._cardImageEl = this._cardElement.querySelector(".card__image");
     this._cardTitleEl = this._cardElement.querySelector(".card__title");
     this._replaceImageData();
+    this._setLikeStyle();
     this._setEventListeners();
     return this._cardElement;
   }

@@ -9,22 +9,11 @@ export default class PopupWithDelete extends Popup {
     // this._formInputs = this._popupForm.querySelectorAll(".popup__input");
   }
 
-  // _getInputValues() {
-  //   const inputsData = {};
-  //   this._formInputs.forEach((input) => {
-  //     inputsData[input.name] = input.value;
-  //   });
-  //   return inputsData;
-  // }
-
   setSubmitAction(callbackFunc) {
     this._callbackFunc = callbackFunc;
   }
 
   _submitForm() {
-    // evt.preventDefault();
-    // const formInputValues = this._getInputValues();
-    // this._handleFormSubmit(formInputValues);
     this._callbackFunc(); // this actually runs the passed function upon form submit
     this.close();
   }

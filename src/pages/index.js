@@ -29,8 +29,6 @@ const api = new Api({
   baseURL: "https://around-api.en.tripleten-services.com/v1",
   headers: {
     authorization: "98cf51ba-481b-4eec-9343-23efbe8fbf82",
-    // authorization: "3cbd7ab9-da2a-400a-bc4a-e4eebb0f631e",
-    // authorization: "855a635a-7ba2-42bf-af0e-10205bea653f",
     "Content-Type": "application/json",
   },
 });
@@ -60,10 +58,6 @@ Promise.all([user, apiCards]).then(([userData, initialCards]) => {
   cardSection.renderItems();
   // pageUserInfo.setUserAvatar(userData.avatar)
 });
-// .catch(() => (err) => console.log(err));
-
-// console.log(user);
-// console.log(apiCards);
 
 function fillProfileForm(e) {
   const currentInfo = pageUserInfo.getUserInfo();
@@ -86,19 +80,6 @@ editFormValidator.enableValidation();
 
 const addFormValidator = new FormValidator(config, addNewCardFormEl);
 addFormValidator.enableValidation();
-
-// const cardSection = new Section(
-//   {
-//     items: initialCards,
-//     renderer: (initialCardData) => {
-//       const card = createCard(initialCardData);
-//       cardSection.prependItem(card);
-//     },
-//   },
-//   ".cards__list"
-// );
-
-// cardSection.renderItems();
 
 const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
   api.addNewCard(inputValues).then((data) => {
@@ -143,11 +124,20 @@ function createCard(cardData) {
       deleteCardPopup.setSubmitAction(() =>
         api.deleteCard(cardData._id).then(() => card.remove())
       );
+    },
+    (cardId) => {
+      console.log("card isLiked value starts as", card.getLikes());
+      let liked = card.getLikes();
+      if (!liked) {
+        api.addLike(cardId).then((data) => {
+          console.log("card isLiked value is now", data.isLiked);
+        });
+      } else {
+        api.deleteLike(cardId).then((data) => {
+          console.log("card isLiked value is now", data.isLiked);
+        });
+      }
     }
-    // (inputValues) => {
-    //   // function
-    //   api.deleteCard(inputValues).then(() => card.remove());
-    // }
   );
   return card.getView();
 }

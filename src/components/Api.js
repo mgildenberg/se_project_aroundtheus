@@ -52,17 +52,6 @@ class Api {
     });
   }
 
-  // deleteCard(inputValues) {
-  //   console.log("deleteCard", inputValues);
-  //   // this._headers["Content-Type"] = "application/json";
-  //   return fetch(`${this._baseURL}/cards/${inputValues}`, {
-  //     method: "DELETE",
-  //     headers: this._headers,
-  //   }).then((res) => {
-  //     return this._checkServerResponse(res);
-  //   });
-  // }
-
   updateUserInfo(inputValues) {
     console.log("updateUserInfo", inputValues);
     const inputValuesName = inputValues.title;
@@ -75,6 +64,33 @@ class Api {
         name: inputValuesName,
         about: inputValuesAbout,
       }),
+    }).then((res) => {
+      return this._checkServerResponse(res);
+    });
+  }
+
+  getLikes(cardId) {
+    return fetch(`${this._baseURL}/cards/${cardId}/likes`, {
+      method: "GET",
+      headers: this._headers,
+    }).then((res) => {
+      return this._checkServerResponse(res);
+    });
+  }
+
+  addLike(cardId) {
+    return fetch(`${this._baseURL}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    }).then((res) => {
+      return this._checkServerResponse(res);
+    });
+  }
+
+  deleteLike(cardId) {
+    return fetch(`${this._baseURL}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
     }).then((res) => {
       return this._checkServerResponse(res);
     });

@@ -6,6 +6,9 @@ export default class PopupWithForm extends Popup {
     this._popupForm = this._popupElement.querySelector(".popup__form");
     this._handleFormSubmit = handleFormSubmit;
     this._formInputs = this._popupForm.querySelectorAll(".popup__input");
+    this._submitButton = this._popupForm.querySelectorAll(".popup__button");
+    this._submitButtonText = this._submitButton.textContent;
+    // const normalState = this._submitButtonText;
   }
 
   _getInputValues() {
@@ -20,6 +23,17 @@ export default class PopupWithForm extends Popup {
     const formInputValues = this._getInputValues();
     this._handleFormSubmit(formInputValues);
     this.close();
+  }
+
+  setLoadingState(isLoading) {
+    const normalState = this._submitButtonText;
+    console.log("in loading state");
+    if (isLoading) {
+      this._submitButtonText = "...Saving";
+    } else {
+      this._submitButtonText = normalState;
+    }
+    console.log("in loading state 2");
   }
 
   setEventListeners() {

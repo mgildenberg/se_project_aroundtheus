@@ -39,6 +39,38 @@ let user = api.getUserInfo();
 let apiCards = api.getInitialCards();
 let cardSection;
 
+function createCard(cardData) {
+  const card = new Card(
+    cardData,
+    "#card-template",
+    (cardData) => {
+      imageViewerPopup.open(cardData);
+    },
+    (event) => {
+      deleteCardPopup.open();
+      deleteCardPopup.setSubmitAction(() => {
+        deleteCardPopup.setLoadingState(true);
+        api.deleteCard(cardData._id).then(() => card.remove());
+        // .finally(deleteCardPopup.setLoadingState(false));
+      });
+    },
+    (cardId) => {
+      console.log("card isLiked value starts as", card.getLikes());
+      let liked = card.getLikes();
+      if (!liked) {
+        api.addLike(cardId).then((data) => {
+          console.log("card isLiked value is now", data.isLiked);
+        });
+      } else {
+        api.deleteLike(cardId).then((data) => {
+          console.log("card isLiked value is now", data.isLiked);
+        });
+      }
+    }
+  );
+  return card.getView();
+}
+
 Promise.all([user, apiCards]).then(([userData, initialCards]) => {
   user = userData._id;
   // console.log("userData", userData);
@@ -90,10 +122,12 @@ const editAvatarFormValidator = new FormValidator(
 editAvatarFormValidator.enableValidation();
 
 const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
-  api.addNewCard(inputValues).then((data) => {
-    const newCard = createCard(data);
+  api.addNewCard(inputValues).then((responseDataObj) => {
+    const newCard = createCard(responseDataObj.data);
     cardSection.prependItem(newCard);
   });
+  // .
+  // .then(api.getInitialCards());
 });
 
 const editAvatarPopup = new PopupWithForm(
@@ -142,36 +176,6 @@ imageViewerPopup.setEventListeners();
 
 const deleteCardPopup = new PopupWithConfirmation("#delete-card-popup");
 deleteCardPopup.setEventListeners();
-
-function createCard(cardData) {
-  const card = new Card(
-    cardData,
-    "#card-template",
-    (cardData) => {
-      imageViewerPopup.open(cardData);
-    },
-    (event) => {
-      deleteCardPopup.open();
-      deleteCardPopup.setSubmitAction(() =>
-        api.deleteCard(cardData._id).then(() => card.remove())
-      );
-    },
-    (cardId) => {
-      console.log("card isLiked value starts as", card.getLikes());
-      let liked = card.getLikes();
-      if (!liked) {
-        api.addLike(cardId).then((data) => {
-          console.log("card isLiked value is now", data.isLiked);
-        });
-      } else {
-        api.deleteLike(cardId).then((data) => {
-          console.log("card isLiked value is now", data.isLiked);
-        });
-      }
-    }
-  );
-  return card.getView();
-}
 
 addProfileFormListeners();
 addNewCardListeners();

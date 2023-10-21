@@ -90,10 +90,6 @@
   line-height: 17px;
 }
 
-/* .popup__input:first-of-type {
-  padding-top: 40px;
-} */
-
 .popup__form {
   display: flex;
   flex-direction: column;
@@ -119,16 +115,6 @@
   text-align: center;
   cursor: default;
 }
-
-/* .popup__button_delete {
-  margin-top: 0;
-} */
-
-/* .popup__button:hover {
-  cursor: pointer;
-  /* background-color: rgba(0, 0, 0, 0.8); */
-/*opacity: 0.6;
-} */
 
 .popup__button:hover:not(:disabled) {
   opacity: 0.8;
@@ -186,7 +172,6 @@
   .popup__heading {
     font-size: 18px;
     line-height: 22px;
-    /*margin-bottom: 35px; 60px; */
   }
 
   .popup__input {
@@ -197,6 +182,6 @@
   .popup__button {
     font-size: 14px;
     line-height: 17px;
-    margin-top: 45px;
+    margin-top: 24px;
   }
 }

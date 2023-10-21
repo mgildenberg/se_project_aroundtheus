@@ -24,7 +24,6 @@ const pageUserInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
   avatarSelector: "#profile-avatar",
-  // avatorSelector: ".profile__image", idk why but this doesn't work
 });
 
 const api = new Api({
@@ -49,9 +48,11 @@ function createCard(cardData) {
     (event) => {
       deleteCardPopup.open();
       deleteCardPopup.setSubmitAction(() => {
-        deleteCardPopup.setLoadingState(true);
-        api.deleteCard(cardData._id).then(() => card.remove());
-        // .finally(deleteCardPopup.setLoadingState(false));
+        deleteCardPopup.setLoadingState(true, "Yes");
+        api.deleteCard(cardData._id).then(() => {
+          deleteCardPopup.setLoadingState(false, "Yes");
+          card.remove();
+        });
       });
     },
     (cardId) => {
@@ -94,7 +95,7 @@ Promise.all([user, apiCards]).then(([userData, initialCards]) => {
 });
 
 function fillProfileForm(e) {
-  const currentInfo = pageUserInfo.getUserInfo();
+  let currentInfo = pageUserInfo.getUserInfo();
   profileTitleInput.value = currentInfo.name;
   profileDescriptionInput.value = currentInfo.job;
 }
@@ -103,8 +104,16 @@ const profileEditForm = new PopupWithForm(
   "#profile-edit-popup",
   (inputValues) => {
     //pageUserInfo.setUserInfo(inputValues);
-    api.updateUserInfo(inputValues);
-    profileEditForm.close();
+    profileEditForm.setLoadingState(true);
+    api.updateUserInfo(inputValues).then(() => {
+      api
+        .getUserInfo()
+        .then((data) => pageUserInfo.setUserInfo(data))
+        .finally(() => {
+          profileEditForm.setLoadingState(false);
+          profileEditForm.close();
+        });
+    });
   }
 );
 profileEditForm.setEventListeners();
@@ -126,14 +135,14 @@ const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
     const newCard = createCard(responseDataObj.data);
     cardSection.prependItem(newCard);
   });
-  // .
-  // .then(api.getInitialCards());
 });
 
 const editAvatarPopup = new PopupWithForm(
   "#edit-avatar-popup",
   (inputValues) => {
+    editAvatarPopup.setLoadingState(true);
     api.updateAvatar(inputValues).then(() => {
+      editAvatarPopup.setLoadingState(false);
       api.getUserInfo().then((userData) => {
         pageUserInfo.setUserAvatar(userData);
       });

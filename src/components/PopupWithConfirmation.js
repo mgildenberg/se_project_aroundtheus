@@ -13,16 +13,25 @@ export default class PopupWithDelete extends Popup {
     this._callbackFunc = callbackFunc;
   }
 
-  setLoadingState(isLoading) {
-    const normalState = this._submitButtonText;
-    console.log("in loading state");
+  setLoadingState(isLoading, defaultText = "Save") {
+    console.log("we are in", this._popupElement.id);
     if (isLoading) {
       this._submitButtonText = "...Saving";
-      console.log(this._submitButtonText);
+      console.log(
+        "loading state is ",
+        isLoading,
+        "submitButtonText is",
+        this._submitButtonText
+      );
     } else {
-      this._submitButtonText = normalState;
+      this._submitButtonText = defaultText;
+      console.log(
+        "loading state is ",
+        isLoading,
+        "submitButtonText is",
+        this._submitButtonText
+      );
     }
-    console.log("in loading state 2");
   }
 
   _submitForm() {

@@ -9,26 +9,18 @@ class Api {
   }
 
   getUserInfo() {
-    // console.log("in getUseInfo");
-    // console.log(this._baseURL, this._headers);
     return fetch(`${this._baseURL}/users/me`, {
       headers: this._headers,
-    }).then((res) => {
-      return this._checkServerResponse(res);
-    });
+    }).then(this._checkServerResponse);
   }
 
   getInitialCards() {
     return fetch(`${this._baseURL}/cards`, {
       headers: this._headers,
-    }).then((res) => {
-      return this._checkServerResponse(res);
-    });
+    }).then(this._checkServerResponse);
   }
 
   addNewCard(inputValues) {
-    // console.log("addNewCard", inputValues);
-    // this._headers["Content-Type"] = "application/json";
     return fetch(`${this._baseURL}/cards`, {
       method: "POST",
       headers: this._headers,
@@ -36,72 +28,55 @@ class Api {
         name: inputValues.name,
         link: inputValues.link,
       }),
-    }).then((res) => {
-      return this._checkServerResponse(res);
-    });
+    }).then(this._checkServerResponse);
   }
 
   deleteCard(cardId) {
-    console.log("deleteCard", cardId);
-    // this._headers["Content-Type"] = "application/json";
     return fetch(`${this._baseURL}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then((res) => {
-      return this._checkServerResponse(res);
-    });
+    }).then(this._checkServerResponse);
   }
 
-  updateUserInfo(inputValues) {
-    console.log("updateUserInfo", inputValues);
-    const inputValuesName = inputValues.title;
-    const inputValuesAbout = inputValues.about;
+  updateUserInfo(userInfo) {
+    const userInfoName = userInfo.title;
+    const userInfoAbout = userInfo.about;
 
     return fetch(`${this._baseURL}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: inputValuesName,
-        about: inputValuesAbout,
+        name: userInfoName,
+        about: userInfoAbout,
       }),
     }).then((res) => {
       return this._checkServerResponse(res);
     });
   }
 
-  updateAvatar(inputValues) {
-    console.log(inputValues);
-    let inputValuesLink = inputValues.link;
-    console.log(inputValuesLink);
-    // console.log("addNewCard", inputValues);
-    // this._headers["Content-Type"] = "application/json";
+  updateAvatar(avatarInfo) {
+    const avatarInfoLink = avatarInfo.link;
     return fetch(`${this._baseURL}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: inputValuesLink,
+        avatar: avatarInfoLink,
       }),
-    }).then((res) => {
-      return this._checkServerResponse(res);
-    });
+    }).then(this._checkServerResponse);
   }
 
   addLike(cardId) {
     return fetch(`${this._baseURL}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
-    }).then((res) => {
-      return this._checkServerResponse(res);
-    });
+    }).then(this._checkServerResponse);
   }
 
   deleteLike(cardId) {
     return fetch(`${this._baseURL}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    }).then((res) => {
-      return this._checkServerResponse(res);
-    });
+    }).then(this._checkServerResponse);
   }
 }
 

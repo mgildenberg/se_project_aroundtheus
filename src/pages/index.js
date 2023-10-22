@@ -56,16 +56,11 @@ function createCard(cardData) {
       });
     },
     (cardId) => {
-      console.log("card isLiked value starts as", card.getLikes());
       let liked = card.getLikes();
       if (!liked) {
-        api.addLike(cardId).then((data) => {
-          console.log("card isLiked value is now", data.isLiked);
-        });
+        api.addLike(cardId).then((data) => {});
       } else {
-        api.deleteLike(cardId).then((data) => {
-          console.log("card isLiked value is now", data.isLiked);
-        });
+        api.deleteLike(cardId).then((data) => {});
       }
     }
   );
@@ -74,10 +69,8 @@ function createCard(cardData) {
 
 Promise.all([user, apiCards]).then(([userData, initialCards]) => {
   user = userData._id;
-  // console.log("userData", userData);
   pageUserInfo.setUserInfo(userData);
   pageUserInfo.setUserAvatar(userData);
-  console.log(initialCards);
 
   cardSection = new Section(
     {
@@ -91,11 +84,10 @@ Promise.all([user, apiCards]).then(([userData, initialCards]) => {
   );
 
   cardSection.renderItems();
-  // pageUserInfo.setUserAvatar(userData.avatar)
 });
 
 function fillProfileForm(e) {
-  let currentInfo = pageUserInfo.getUserInfo();
+  const currentInfo = pageUserInfo.getUserInfo();
   profileTitleInput.value = currentInfo.name;
   profileDescriptionInput.value = currentInfo.job;
 }
@@ -103,7 +95,6 @@ function fillProfileForm(e) {
 const profileEditForm = new PopupWithForm(
   "#profile-edit-popup",
   (inputValues) => {
-    //pageUserInfo.setUserInfo(inputValues);
     profileEditForm.setLoadingState(true);
     api.updateUserInfo(inputValues).then(() => {
       api
@@ -152,9 +143,7 @@ const editAvatarPopup = new PopupWithForm(
 
 function addEditAvatarPopupListeners() {
   profileEditAvatarButton.addEventListener("click", () => {
-    // event.preventDefault();
-    console.log("edit avatar clicked");
-    // editAvatarFormValidator.disableButton(); // disable button ahead of open func
+    editAvatarFormValidator.disableButton(); // disable button ahead of open func
     editAvatarPopup.open();
   });
 

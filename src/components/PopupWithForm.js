@@ -29,20 +29,8 @@ export default class PopupWithForm extends Popup {
     console.log("we are in", this._popupElement.id);
     if (isLoading) {
       this._submitButtonText = "...Saving";
-      console.log(
-        "loading state is ",
-        isLoading,
-        "submitButtonText is",
-        this._submitButtonText
-      );
     } else {
       this._submitButtonText = defaultText;
-      console.log(
-        "loading state is ",
-        isLoading,
-        "submitButtonText is",
-        this._submitButtonText
-      );
     }
   }
 

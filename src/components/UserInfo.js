@@ -14,7 +14,6 @@ export default class UserInfo {
   setUserInfo(inputValues) {
     this._profileTitle.textContent = inputValues.name;
     this._profileDescription.textContent = inputValues.about;
-    // console.log(this._avatarElement);
   }
 
   setUserAvatar(inputValues) {

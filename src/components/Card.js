@@ -37,9 +37,9 @@ export default class Card {
     });
   }
 
-  setIsLiked(isLikedResp) {
+  setIsLiked(isLiked) {
     // set instance variable
-    this._isLiked = isLikedResp;
+    this._isLiked = isLiked;
     this._renderLikes();
   }
 

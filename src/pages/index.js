@@ -56,7 +56,7 @@ function createCard(cardData) {
             card.remove();
           })
           .catch((err) => console.log(err))
-          .finally(deleteCardPopup.setLoadingState(false));
+          .finally(() => deleteCardPopup.setLoadingState(false));
       });
     },
     (cardId) => {
@@ -81,24 +81,26 @@ function createCard(cardData) {
   return card.getView();
 }
 
-Promise.all([user, apiCards]).then(([userData, initialCards]) => {
-  user = userData._id;
-  pageUserInfo.setUserInfo(userData);
-  pageUserInfo.setUserAvatar(userData);
+Promise.all([user, apiCards])
+  .then(([userData, initialCards]) => {
+    user = userData._id;
+    pageUserInfo.setUserInfo(userData);
+    pageUserInfo.setUserAvatar(userData);
 
-  cardSection = new Section(
-    {
-      items: initialCards,
-      renderer: (initialCardData) => {
-        const card = createCard(initialCardData);
-        cardSection.prependItem(card);
+    cardSection = new Section(
+      {
+        items: initialCards,
+        renderer: (initialCardData) => {
+          const card = createCard(initialCardData);
+          cardSection.prependItem(card);
+        },
       },
-    },
-    ".cards__list"
-  );
+      ".cards__list"
+    );
 
-  cardSection.renderItems();
-});
+    cardSection.renderItems();
+  })
+  .catch((err) => console.log(err));
 
 function fillProfileForm(e) {
   const currentInfo = pageUserInfo.getUserInfo();
@@ -118,7 +120,7 @@ const profileEditForm = new PopupWithForm(
           pageUserInfo.setUserInfo(data);
         })
         .catch((err) => console.log(err))
-        .finally(profileEditForm.setLoadingState(false));
+        .finally(() => profileEditForm.setLoadingState(false));
     });
   }
 );
@@ -146,7 +148,7 @@ const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
       cardSection.prependItem(newCard);
     })
     .catch((err) => console.log(err))
-    .finally(addNewCardForm.setLoadingState(false));
+    .finally(() => addNewCardForm.setLoadingState(false));
 });
 
 const editAvatarPopup = new PopupWithForm(
@@ -160,7 +162,7 @@ const editAvatarPopup = new PopupWithForm(
         editAvatarPopup.close();
       })
       .catch((err) => console.log(err))
-      .finally(editAvatarPopup.setLoadingState(false));
+      .finally(() => editAvatarPopup.setLoadingState(false));
   }
 );
 

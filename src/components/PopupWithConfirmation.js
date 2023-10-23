@@ -12,17 +12,15 @@ export default class PopupWithDelete extends Popup {
     this._callbackFunc = callbackFunc;
   }
 
-  setLoadingState(isLoading, defaultText = "Save") {
-    if (isLoading) {
-      this._submitButtonText = "...Saving";
-    } else {
-      this._submitButtonText = defaultText;
-    }
+  setLoadingState(isLoading) {
+    this._submitButton.textContent = isLoading
+      ? "...Saving"
+      : this._submitButtonText;
   }
 
   _submitForm() {
     this._callbackFunc(); // this actually runs the passed function upon form submit
-    super.close();
+    // super.close();
   }
 
   setEventListeners() {

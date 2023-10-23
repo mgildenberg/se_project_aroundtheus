@@ -16,8 +16,8 @@ export default class UserInfo {
     this._profileDescription.textContent = inputValues.about;
   }
 
-  setUserAvatar(inputValues) {
-    this._avatarElement.src = inputValues.avatar;
+  setUserAvatar(response) {
+    this._avatarElement.src = response.avatar;
     this._avatarElement.alt = this._profileTitle.textContent;
   }
 }

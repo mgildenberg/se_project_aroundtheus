@@ -22,16 +22,13 @@ export default class PopupWithForm extends Popup {
   _submitForm() {
     const formInputValues = this._getInputValues();
     this._handleFormSubmit(formInputValues);
-    this.close();
+    // this.close();
   }
 
-  setLoadingState(isLoading, defaultText = "Save") {
-    console.log("we are in", this._popupElement.id);
-    if (isLoading) {
-      this._submitButtonText = "...Saving";
-    } else {
-      this._submitButtonText = defaultText;
-    }
+  setLoadingState(isLoading) {
+    this._submitButton.textContent = isLoading
+      ? "...Saving"
+      : this._submitButtonText;
   }
 
   setEventListeners() {

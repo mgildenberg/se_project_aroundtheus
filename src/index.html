@@ -25,11 +25,15 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <img
-            class="profile__image"
-            src="<%=require('./images/jacques-cousteau.png')%>"
-            alt="avatar"
-          />
+          <div class="profile__image-container">
+            <img
+              class="profile__image"
+              src="<%=require('./images/jacques-cousteau.png')%>"
+              alt="avatar"
+              id="profile-avatar"
+            />
+            <button class="profile__edit-button_avatar" type="button"></button>
+          </div>
           <div class="profile__info">
             <h1 class="profile__title">Jacques Cousteau</h1>
             <button
@@ -49,7 +53,30 @@
     <footer class="footer">
       <p class="footer__text">© 2023 Around The U.S.</p>
     </footer>
-
+    <!-- Edit Avatar popup -->
+    <div class="popup" id="edit-avatar-popup">
+      <div class="popup__container">
+        <button
+          class="popup__close"
+          id="edit-avatar-popup-close-button"
+          type="button"
+        ></button>
+        <h3 class="popup__heading">Change profile picture</h3>
+        <form class="popup__form" id="edit-avatar-form">
+          <input
+            class="popup__input popup__input_type_url"
+            type="url"
+            name="link"
+            title="url"
+            id="avatar-url-input"
+            placeholder="http://somewebsite.com/someimage.jpg"
+            required
+          />
+          <span class="popup__error" id="avatar-url-input-error"></span>
+          <button class="popup__button" type="submit">Save</button>
+        </form>
+      </div>
+    </div>
     <!-- Edit popup -->
     <div class="popup" id="profile-edit-popup">
       <div class="popup__container">
@@ -89,6 +116,20 @@
           <button class="popup__button" id="profile-button" type="submit">
             Save
           </button>
+        </form>
+      </div>
+    </div>
+    <!-- Delete card popup -->
+    <div class="popup" id="delete-card-popup">
+      <div class="popup__container popup__container_delete">
+        <button
+          class="popup__close"
+          id="delete-card-close-button"
+          type="button"
+        ></button>
+        <form class="popup__form">
+          <h3 class="popup__heading">Are you sure?</h3>
+          <button class="popup__button" type="submit">Yes</button>
         </form>
       </div>
     </div>

@@ -34,10 +34,6 @@ const api = new Api({
   },
 });
 
-let user = api.getUserInfo().catch((err) => console.log(err));
-let apiCards = api.getInitialCards().catch((err) => console.log(err));
-let cardSection;
-
 function createCard(cardData) {
   const card = new Card(
     cardData,
@@ -81,7 +77,10 @@ function createCard(cardData) {
   return card.getView();
 }
 
-Promise.all([user, apiCards])
+let user;
+let cardSection;
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, initialCards]) => {
     user = userData._id;
     pageUserInfo.setUserInfo(userData);
@@ -112,18 +111,20 @@ const profileEditForm = new PopupWithForm(
   "#profile-edit-popup",
   (inputValues) => {
     profileEditForm.setLoadingState(true);
-    api.updateUserInfo(inputValues).then(() => {
-      api
-        .getUserInfo()
-        .then((data) => {
-          profileEditForm.close();
-          pageUserInfo.setUserInfo(data);
-        })
-        .catch((err) => console.log(err))
-        .finally(() => profileEditForm.setLoadingState(false));
-    });
+    api
+      .updateUserInfo(inputValues)
+      .then((resp) => {
+        console.log(resp);
+        pageUserInfo.setUserInfo(resp);
+        profileEditForm.close();
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        profileEditForm.setLoadingState(false);
+      });
   }
 );
+
 profileEditForm.setEventListeners();
 
 const editFormValidator = new FormValidator(config, profileEditFormEl);
@@ -143,12 +144,15 @@ const addNewCardForm = new PopupWithForm("#add-image-popup", (inputValues) => {
   api
     .addNewCard(inputValues)
     .then((responseDataObj) => {
-      const newCard = createCard(responseDataObj.data);
-      addNewCardForm.close();
+      const newCard = createCard(responseDataObj);
       cardSection.prependItem(newCard);
+      addNewCardForm.close();
     })
     .catch((err) => console.log(err))
-    .finally(() => addNewCardForm.setLoadingState(false));
+    .finally(() => {
+      addNewCardForm.setLoadingState(false);
+      // console.log(addNewCardForm._submitButtonText);
+    });
 });
 
 const editAvatarPopup = new PopupWithForm(
